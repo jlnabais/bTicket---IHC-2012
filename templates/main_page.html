@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Welcome to bTicket{% endblock %}
+{% block head %}Welcome to bTicket{% endblock %}
+{% block content %}
+	{% if user.username %}
+		<p>Wellcome {{ user.username }}!
+		Here you can buy your bus tickets!</p>
+		<p>Manage Tickets<a href="/user"> here</a>.</p>
+	{% else %}
+		<p>Welcome anonymous user!
+		You need to <a href="/login">login</a>
+		before you can buy your bus tickets.</p>
+	{% endif %}
+{% endblock %}

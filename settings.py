@@ -1,6 +1,11 @@
 import os.path
 # Django settings for bTicket project.
 
+import urlparse
+
+# Register database schemes in URLs.
+urlparse.uses_netloc.append('postgres')
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -10,13 +15,22 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = 'bTicket_db'             # Or path to database file if using sqlite3.
-DATABASE_USER = ''             # Not used with sqlite3.
-DATABASE_PASSWORD = ''         # Not used with sqlite3.
-DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+url = urlparse.urlparse(os.environ['DATABASE_URL'])
 
+if 'DATABASE_URL' in os.environ:	
+	DATABASE_ENGINE = 'postgresql'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+	DATABASE_NAME = url.path[1:]             # Or path to database file if using sqlite3.
+	DATABASE_USER = url.username             # Not used with sqlite3.
+	DATABASE_PASSWORD = url.password         # Not used with sqlite3.
+	DATABASE_HOST = url.hostname            # Set to empty string for localhost. Not used with sqlite3.
+	DATABASE_PORT = url.port             # Set to empty string for default. Not used with sqlite3.
+else:
+	DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+	DATABASE_NAME = 'bTicket_db'             # Or path to database file if using sqlite3.
+	DATABASE_USER = ''             # Not used with sqlite3.
+	DATABASE_PASSWORD = ''         # Not used with sqlite3.
+	DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
+	DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.

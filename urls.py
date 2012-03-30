@@ -1,6 +1,7 @@
 import os
 from django.conf.urls.defaults import *
 from bticket.views import *
+from django.views.generic.simple import direct_to_template
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -18,6 +19,8 @@ urlpatterns = patterns('',
 	(r'^site_media/(?P<path>.*)$', 'django.views.static.serve',
 	{'document_root': site_media}),
 	(r'^register/$', register_page),
+	(r'^register/success/$', direct_to_template,
+		{'template': 'registration/register_success.html'}),
     # Example:
     # (r'^bTicket/', include('bTicket.foo.urls')),
 

@@ -15,9 +15,10 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-url = urlparse.urlparse(os.environ['DATABASE_URL'])
+
 
 if 'DATABASE_URL' in os.environ:	
+	url = urlparse.urlparse(os.environ['DATABASE_URL'])
 	DATABASE_ENGINE = 'postgresql'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
 	DATABASE_NAME = url.path[1:]             # Or path to database file if using sqlite3.
 	DATABASE_USER = url.username             # Not used with sqlite3.

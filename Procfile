@@ -1,1 +1,1 @@
-web: cd /app/ && gunicorn_django -b 0.0.0.0:\$PORT -w 9 --max-requests 250 --preload /app/settings.py
+web: python kenblog/manage.py run_gunicorn -b "0.0.0.0:$PORT" -w 3

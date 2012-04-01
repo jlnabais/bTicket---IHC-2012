@@ -1,8 +1,15 @@
-SUPERUSER:
+SUPERUSER no PC:
 
 Username: bticket
 E-MAIL: HCIbTicket@gmail.com
 PASSWORD: bticketpass
+
+SUPERUSER NO Heroku:
+
+Username: jlnabais
+E-MAIL: jlnabais@gmail.com
+PASSWORD: <costume>
+
 
 GMAIL ACCOUNT:
 

@@ -17,9 +17,13 @@ urlpatterns = patterns('',
 	(r'^user/$', user_page),
 	(r'^login/$', 'django.contrib.auth.views.login'),
 	(r'^logout', logout_page),
-	(r'^site_media/(?P<path>.*)$', 'django.views.static.serve',
-	{'document_root': settings.MEDIA_ROOT}),
 	(r'^register/$', register_page),
 	(r'^register/success/$', direct_to_template,
 		{'template': 'registration/register_success.html'}),
 )
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        (r'^site_media/(.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+
+    )

@@ -1,0 +1,19 @@
+#nav {
+	float: right;
+}
+
+input{
+	display: block;
+}
+
+/* PC Window ----------- */
+@media screen and (min-width : 768px) and (max-width : 1024px) {
+/* Styles */
+	#nav{background-color:yellow;}
+}
+
+/* Cellphone Window ----------- */
+@media screen and (min-width : 480px) and (max-width : 768px) {
+	/* Styles */
+	#nav{background-color:green;}
+}

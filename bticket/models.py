@@ -22,6 +22,7 @@ class Pass(models.Model):
 	expiration_date = models.DateField(default = datetime.datetime.today)
 
 class BillingAccount(models.Model):
+	Card_Number = models.DecimalField(max_digits = 16, decimal_places = 0)
 	NIB = models.DecimalField(max_digits = 21, decimal_places = 0)
 	IBAN =  models.DecimalField(max_digits = 34, decimal_places = 0)
 	SWIFT = models.DecimalField(max_digits = 11, decimal_places = 0)

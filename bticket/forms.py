@@ -32,3 +32,8 @@ class RegistrationForm(forms.Form):
 		except:
 			return username
 		raise forms.ValidationError('Username is already taken.')
+
+class OnTheFlyTicket(forms.Form):
+	number_of_trips = forms.DecimalField(max_digits = 2 , decimal_places = 0)
+	card_number = forms.DecimalField(max_digits = 16 , decimal_places = 0)
+	

@@ -41,10 +41,10 @@ def main_page(request):
 			mail_from = DEFAULT_FROM_EMAIL
 			mail_to =  [form.cleaned_data['email']]
 			
-			qrc_image = qrcode.make(qrcode_obj.qr_code)
-			qrc_image.save('site_media/'+ ticket.qr_code.qr_code + ".png")
+			qrc_image = qrcode.make(generated_qrc)
+			qrc_image.save('site_media/'+ generated_qrc + ".png")
 			msg = EmailMultiAlternatives(mail_subject, mail_body, mail_from, mail_to)
-			msg.attach_file('site_media/'+ ticket.qr_code.qr_code + ".png")
+			msg.attach_file('site_media/'+ generated_qrc + ".png")
 			msg.send()
 			os.remove('site_media/'+ ticket.qr_code.qr_code + ".png")
 			

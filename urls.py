@@ -19,5 +19,8 @@ urlpatterns = patterns('',
 	(r'^logout', logout_page),
 	(r'^register/$', register_page),
 	(r'^register/success/$', direct_to_template, {'template': 'registration/register_success.html'}),
+	(r'^ontheflyticket/success/$', direct_to_template, {'template': 'purchase/onthefly_success.html'}),
 	(r'^site_media/(.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+	(r'^qrcode/(\w+)/$', generate_qrcode),
+    
 )

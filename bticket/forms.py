@@ -1,6 +1,9 @@
 from django import forms
 import re
 from django.contrib.auth.models import User
+from django.forms import ModelForm
+from bticket.models import *
+
 
 class RegistrationForm(forms.Form):
 	username = forms.CharField(label = u'Username', max_length = 30)
@@ -33,7 +36,10 @@ class RegistrationForm(forms.Form):
 			return username
 		raise forms.ValidationError('Username is already taken.')
 
-class OnTheFlyTicket(forms.Form):
-	number_of_trips = forms.DecimalField(max_digits = 2 , decimal_places = 0)
-	card_number = forms.DecimalField(max_digits = 16 , decimal_places = 0)
+class OnTheFlyTicketForm(ModelForm):
+	class Meta:
+		model = OnTheFlyTicket
+		exclude = ('recovery_code', 'emission_date', 'qr_code')
+	email = forms.EmailField(label = u'Email')
+	
 	

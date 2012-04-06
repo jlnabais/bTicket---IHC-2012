@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Purchase Confirmation{% endblock %}
+{% block head %}Purchase Confirmation{% endblock %}
+{% block content %}
+	<p>Recovery_code:
+	<br/>{{ ticket.recovery_code }}
+	</p>
+	<p>QR Code:
+	<br/><img src="/qrcode/{{ ticket.qr_code.qr_code }}/">
+	</p>
+{% endblock %}

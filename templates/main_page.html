@@ -11,4 +11,9 @@
 		You need to <a href="/login">login</a>
 		before you can buy your bus tickets.</p>
 	{% endif %}
+	<h1>On The Fly Ticket</h1>
+	<form method="post" action=".">
+		{{ form.as_p }}
+		<input type="submit" value="Buy" />
+	</form>
 {% endblock %}

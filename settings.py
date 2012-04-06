@@ -99,3 +99,10 @@ INSTALLED_APPS = (
     'bticket',
     'gunicorn',
 )
+
+DEFAULT_FROM_EMAIL = 'HCIbTicket@gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'HCIbTicket@gmail.com'
+EMAIL_HOST_PASSWORD = 'bticketpass'
+EMAIL_PORT = 587

@@ -20,12 +20,12 @@ def main_page(request):
 		form = OnTheFlyTicketForm(request.POST)
 		if form.is_valid():
 			generated_str = g.id_generator(10)
-			while OnTheFlyTicket.objects.filter(recovery_code = generated_str):
+			while OnTheFlyTicket.objects.filter(recovery_code = generated_str).count():
 				generated_str = g.id_generator(10)
 			
 			generated_qrc_str = g.id_generator(8)
 			generated_qrc = hashlib.sha1('bticketcode').hexdigest() + generated_qrc_str
-			while OnTheFlyTicket.objects.filter(qr_code = generated_qrc):
+			while OnTheFlyTicket.objects.filter(qr_code__qr_code = generated_qrc).count():
 				generated_qrc_str = g.id_generator(8)
 				generated_qrc = hashlib.sha1('bticketcode').hexdigest() + generated_qrc_str
 			

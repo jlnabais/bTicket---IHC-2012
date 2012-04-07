@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Recover OTF Ticket{% endblock %}
+{% block head %}Recover OTF Ticket{% endblock %}
+{% block content %}
+	{% if email %}
+		<p>Recovery e-mail successfully sent to: {{email}}</p>
+	{% else %}
+		<p>Recovery_code:
+		<br/>{{ ticket.recovery_code }}
+		</p>
+		<p>QR Code:
+		<br/><img src="/qrcode/{{ ticket.qr_code.qr_code }}/">
+		</p>
+		<form method="post" action="/recovery/{{ticket.recovery_code}}/">
+			{{ form.as_p }}
+			<input type="submit" value="Send e-mail" />
+		</form>
+	{% endif %}
+{% endblock %}

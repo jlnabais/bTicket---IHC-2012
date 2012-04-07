@@ -22,5 +22,6 @@ urlpatterns = patterns('',
 	(r'^ontheflyticket/success/$', direct_to_template, {'template': 'purchase/onthefly_success.html'}),
 	(r'^site_media/(.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
 	(r'^qrcode/(\w+)/$', generate_qrcode),
-    
+    (r'^recovery/(\w+)/$', send_email_from_recovery),
+	
 )

@@ -18,6 +18,7 @@ from os import remove
 def main_page(request):
 	if request.method == 'POST':
 		form = OnTheFlyTicketForm(request.POST)
+		recovery_form = RecoveryOnTheFlyTicketForm(request.POST)
 		if form.is_valid():
 			generated_str = g.id_generator(10)
 			while OnTheFlyTicket.objects.filter(recovery_code = generated_str).count():
@@ -56,10 +57,23 @@ def main_page(request):
 				'purchase/onthefly_success.html',
 				variables
 			)
+		if recovery_form.is_valid():
+			ticket = OnTheFlyTicket.objects.get(recovery_code = recovery_form.cleaned_data['recovery_code'])
+			form = SentEmailFromRecoveryForm()
+			variables = RequestContext(request, {
+				'ticket' : ticket,
+				'form' : form
+			})
+			return render_to_response(
+				'recovery/onthefly_recovery_success.html',
+				variables
+			)
 	else:
 		form = OnTheFlyTicketForm()
+		recovery_form = RecoveryOnTheFlyTicketForm()
 	variables = RequestContext(request, {
-		'form' : form
+		'form' : form,
+		'recovery_form': recovery_form
 	})
 	return render_to_response(
 		'main_page.html',
@@ -111,3 +125,38 @@ def generate_qrcode(request, qr_code):
 	qrc_image = qrcode.make(qr_code)
 	qrc_image.save(response, "PNG")
 	return response
+
+def send_email_from_recovery(request, rcode):
+	if request.method == 'POST':
+		form = SentEmailFromRecoveryForm(request.POST)
+		ticket = OnTheFlyTicket.objects.get(recovery_code = rcode)
+		if form.is_valid():
+			mail_subject = 'bTicket|OntheFly Recovery'
+			mail_body = 'The following Ticket information was issued from our service to been sent to this e-mail.\n\nTicket information: \n\n \tRecovery Code:\n\t' +  ticket.recovery_code + "\n \tQR Code:\n\t"
+			mail_from = DEFAULT_FROM_EMAIL
+			mail_to =  [form.cleaned_data['email']]
+		
+			qrc_image = qrcode.make(ticket.qr_code.qr_code)
+			qrc_image.save('site_media/'+ ticket.qr_code.qr_code + ".png")
+			msg = EmailMultiAlternatives(mail_subject, mail_body, mail_from, mail_to)
+			msg.attach_file('site_media/'+ ticket.qr_code.qr_code + ".png")
+			msg.send()
+			os.remove('site_media/'+ ticket.qr_code.qr_code + ".png")
+		
+			variables = RequestContext(request, {
+				'email' : form.cleaned_data['email']
+			})
+			return render_to_response(
+				'recovery/onthefly_recovery_success.html',
+				variables
+			)
+	else:
+		form = SentEmailFromRecoveryForm()
+		variables = RequestContext(request, {
+			'form' : form
+		})
+		return render_to_response(
+			'recovery/onthefly_recovery_success.html',
+			variables
+		)
+	

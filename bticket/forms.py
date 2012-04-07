@@ -41,5 +41,10 @@ class OnTheFlyTicketForm(ModelForm):
 		model = OnTheFlyTicket
 		exclude = ('recovery_code', 'emission_date', 'qr_code')
 	email = forms.EmailField(label = u'Email')
-	
+
+class RecoveryOnTheFlyTicketForm(forms.Form):
+	recovery_code = forms.CharField(label = u'Recovery Code', max_length = 100)
+
+class SentEmailFromRecoveryForm(forms.Form):
+	email = forms.EmailField(label = u'Email')
 	

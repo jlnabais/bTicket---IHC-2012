@@ -23,5 +23,6 @@ urlpatterns = patterns('',
 	(r'^site_media/(.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
 	(r'^qrcode/(\w+)/$', generate_qrcode),
     (r'^recovery/(\w+)/$', send_email_from_recovery),
+	(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/site_media/favicon.ico'}),
 	
 )

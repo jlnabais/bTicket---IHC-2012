@@ -58,7 +58,22 @@ def main_page(request):
 				variables
 			)
 		if recovery_form.is_valid():
-			ticket = OnTheFlyTicket.objects.get(recovery_code = recovery_form.cleaned_data['recovery_code'])
+			try:
+				ticket = OnTheFlyTicket.objects.get(recovery_code = recovery_form.cleaned_data['recovery_code'])
+			except OnTheFlyTicket.DoesNotExist:
+				form = OnTheFlyTicketForm()
+				recovery_form = RecoveryOnTheFlyTicketForm()
+				error_msg = 'There\'s no ticket associated with that recovery code.'
+				variables = RequestContext(request, {
+					'form' : form,
+					'recovery_form': recovery_form,
+					'error_msg' : error_msg
+				})
+				return render_to_response(
+					'main_page.html',
+					variables
+				)
+				
 			form = SentEmailFromRecoveryForm()
 			variables = RequestContext(request, {
 				'ticket' : ticket,

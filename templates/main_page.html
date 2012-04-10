@@ -17,6 +17,9 @@
 		<input type="submit" value="Buy" />
 	</form>
 	<h1>Recover On The Fly Ticket</h1>
+	{% if error_msg %}
+		<p>{{ error_msg }}
+	{% endif %}
 	<form method="post" action=".">
 		{{ recovery_form.as_p }}
 		<input type="submit" value="Recover" />

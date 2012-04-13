@@ -2,7 +2,8 @@
 {% block title %}User Registration{% endblock %}
 {% block head %}User Registration{% endblock %}
 {% block content %}
-<form method="post" action=".">
+{{user.username}}
+<form enctype="multipart/form-data" method="post" action=".">
 	{{ form.as_p }}
 	<input type="submit" value="register" />
 </form>

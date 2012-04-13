@@ -19,6 +19,8 @@ def main_page(request):
 	if request.method == 'POST':
 		form = OnTheFlyTicketForm(request.POST)
 		recovery_form = RecoveryOnTheFlyTicketForm(request.POST)
+		trips_form = CheckNuberOfTripsForm(request.POST)
+		
 		if form.is_valid():
 			generated_str = g.id_generator(10)
 			while OnTheFlyTicket.objects.filter(recovery_code = generated_str).count():
@@ -57,16 +59,19 @@ def main_page(request):
 				'purchase/onthefly_success.html',
 				variables
 			)
+			
 		if recovery_form.is_valid():
 			try:
 				ticket = OnTheFlyTicket.objects.get(recovery_code = recovery_form.cleaned_data['recovery_code'])
 			except OnTheFlyTicket.DoesNotExist:
 				form = OnTheFlyTicketForm()
 				recovery_form = RecoveryOnTheFlyTicketForm()
+				trips_form = CheckNuberOfTripsForm()
 				error_msg = 'There\'s no ticket associated with that recovery code.'
 				variables = RequestContext(request, {
 					'form' : form,
 					'recovery_form': recovery_form,
+					'trips_form' : trips_form,
 					'error_msg' : error_msg
 				})
 				return render_to_response(
@@ -83,17 +88,54 @@ def main_page(request):
 				'recovery/onthefly_recovery_success.html',
 				variables
 			)
+			
+		if trips_form.is_valid():
+			try:
+				ticket = OnTheFlyTicket.objects.get(recovery_code = trips_form.cleaned_data['code'])
+			except OnTheFlyTicket.DoesNotExist:
+				form = OnTheFlyTicketForm()
+				recovery_form = RecoveryOnTheFlyTicketForm()
+				trips_form = CheckNuberOfTripsForm()
+				error_msg_trips = 'There\'s no ticket associated with that recovery code.'
+				variables = RequestContext(request, {
+					'form' : form,
+					'recovery_form': recovery_form,
+					'trips_form' : trips_form,
+					'error_msg_trips' : error_msg_trips
+				})
+				return render_to_response(
+					'main_page.html',
+					variables
+				)
+				
+			form = OnTheFlyTicketForm()
+			recovery_form = RecoveryOnTheFlyTicketForm()
+			trips_form = CheckNuberOfTripsForm()
+			trips = ticket.number_of_trips
+			variables = RequestContext(request, {
+				'ticket' : ticket,
+				'form' : form,
+				'recovery_form': recovery_form,
+				'trips_form' : trips_form,
+				'trips' : trips
+			})
+			return render_to_response(
+				'main_page.html',
+				variables
+			)
 	else:
 		form = OnTheFlyTicketForm()
 		recovery_form = RecoveryOnTheFlyTicketForm()
-	variables = RequestContext(request, {
-		'form' : form,
-		'recovery_form': recovery_form
-	})
-	return render_to_response(
-		'main_page.html',
-		variables
-	)
+		trips_form = CheckNuberOfTripsForm()
+		variables = RequestContext(request, {
+			'form' : form,
+			'recovery_form': recovery_form,
+			'trips_form' : trips_form
+		})
+		return render_to_response(
+			'main_page.html',
+			variables
+		)
 
 
 def logout_page(request):
@@ -102,31 +144,76 @@ def logout_page(request):
 
 @login_required
 def user_page(request):
-	user = request.user
+	userp = UserProfile.objects.get(user = request.user)
 	
-	tickets = user.ticket_set.all()
-	passes = user.pass_set.all()
+	tickets = userp.ticket_set.all()
+	passes = userp.pass_set.all()
+	image = userp.avatar
+	#template = get_template('user_page.html')
 	
-	template = get_template('user_page.html')
 	variables = RequestContext(request, {
-		'username' : user.username,
+		'username' : userp.user.username,
 		'tickets' : tickets,
-		'passes' : passes
+		'passes' : passes,
+		'image' : image,
+		'full_name' : userp.user.get_full_name()
 	})
 	return render_to_response('user_page.html', variables)
 
+@login_required
+def manage_page(request):
+	if request.method == 'POST':
+		userp = UserProfile.objects.get(user = request.user)
+		form = UserProfileManagementForm(request.POST, request.FILES, instance = request.user.userprofile)
+		if form.is_valid():
+			user = request.user
+			user.email = form.cleaned_data['email']
+			user.first_name = form.cleaned_data['first_name']
+			user.last_name = form.cleaned_data['last_name']
+			user.save()
+			
+			if form.cleaned_data['avatar']:
+				userp.avatar.save(form.cleaned_data['avatar'].name, form.cleaned_data['avatar'], save = True)
+			
+			msg = "Account info changed successfully"
+				
+			variables = RequestContext(request, {
+				'form' : form,
+				'msg' : msg
+			})
+			return render_to_response(
+				'manage/manage.html',
+				variables
+			)
+	else:
+		form = UserProfileManagementForm(
+			initial = { 'email': request.user.email, 'first_name': request.user.first_name, 'last_name': request.user.last_name, },
+			instance = request.user.userprofile)
+		variables = RequestContext(request, {
+			'form' : form
+		})
+		return render_to_response(
+			'manage/manage.html',
+			variables
+		)
+
 def register_page(request):
 	if request.method == 'POST':
-		form = RegistrationForm(request.POST)
+		form = UserProfileRegistrationForm(request.POST, request.FILES)
 		if form.is_valid():
 			user = User.objects.create_user(
 				username = form.cleaned_data['username'],
 				password = form.cleaned_data['password1'],
-				email = form.cleaned_data['email']
+				email = form.cleaned_data['email'],
 			)
+			user.first_name = form.cleaned_data['first_name']
+			user.last_name = form.cleaned_data['last_name']
+			user.save()
+			avatar = form.cleaned_data['avatar']
+			UserProfile.objects.create(user = user, avatar = avatar)
 			return HttpResponseRedirect('/register/success/')
 	else:
-		form = RegistrationForm()
+		form = UserProfileRegistrationForm()
 	variables = RequestContext(request, {
 		'form' : form
 	})

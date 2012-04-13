@@ -4,3 +4,4 @@ psycopg2==2.4.2
 gunicorn==0.13.4
 qrcode
 PIL
+sorl-thumbnail

@@ -3,9 +3,29 @@ import re
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 from bticket.models import *
+from bticket.utils.widgets import AdminImageWidget
 
 
-class RegistrationForm(forms.Form):
+class OnTheFlyTicketForm(ModelForm):
+	class Meta:
+		model = OnTheFlyTicket
+		exclude = ('recovery_code', 'emission_date', 'qr_code')
+	email = forms.EmailField(label = u'Email')
+
+class RecoveryOnTheFlyTicketForm(forms.Form):
+	recovery_code = forms.CharField(label = u'Recovery Code', max_length = 100)
+
+class SentEmailFromRecoveryForm(forms.Form):
+	email = forms.EmailField(label = u'Email')
+
+class CheckNuberOfTripsForm(forms.Form):
+	code = forms.CharField(label = u'Recovery Code', max_length = 100)
+
+class UserProfileRegistrationForm(ModelForm):
+	class Meta:
+		model = UserProfile
+		exclude = ('username')
+	
 	username = forms.CharField(label = u'Username', max_length = 30)
 	email = forms.EmailField(label = u'Email')
 	password1 = forms.CharField(
@@ -16,7 +36,9 @@ class RegistrationForm(forms.Form):
 		label = u'Password(Again)',
 		widget = forms.PasswordInput()
 	)
-	
+	first_name = forms.CharField(label = u'First Name', max_length = 30)
+	last_name = forms.CharField(label = u'Last Name', max_length = 30)
+		
 	def clean_password2(self):
 		if 'password1' in self.cleaned_data:
 			password1 = self.cleaned_data['password1']
@@ -36,15 +58,13 @@ class RegistrationForm(forms.Form):
 			return username
 		raise forms.ValidationError('Username is already taken.')
 
-class OnTheFlyTicketForm(ModelForm):
+class UserProfileManagementForm(ModelForm):
 	class Meta:
-		model = OnTheFlyTicket
-		exclude = ('recovery_code', 'emission_date', 'qr_code')
-	email = forms.EmailField(label = u'Email')
-
-class RecoveryOnTheFlyTicketForm(forms.Form):
-	recovery_code = forms.CharField(label = u'Recovery Code', max_length = 100)
-
-class SentEmailFromRecoveryForm(forms.Form):
-	email = forms.EmailField(label = u'Email')
+		model = UserProfile
+		exclude = ('username')
 	
+	avatar = forms.FileField(widget = AdminImageWidget, required = False)
+	email = forms.EmailField(label = u'Email')
+	first_name = forms.CharField(label = u'First Name', max_length = 30)
+	last_name = forms.CharField(label = u'Last Name', max_length = 30)
+

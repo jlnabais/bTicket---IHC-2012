@@ -2,10 +2,13 @@
 {% block title %}Welcome to bTicket{% endblock %}
 {% block head %}Welcome to bTicket{% endblock %}
 {% block content %}
-	{% if user.username %}
+	{% if user.userprofile %}
+		<p>{{ user.get_full_name }}</p>
+		<img src='site_media/{{user.userprofile.avatar}}' height="80" width="80">
 		<p>Wellcome {{ user.username }}!
 		Here you can buy your bus tickets!</p>
 		<p>Manage Tickets<a href="/user"> here</a>.</p>
+		<p>Manage Account<a href="/manage"> here</a>.</p>
 	{% else %}
 		<p>Welcome anonymous user!
 		You need to <a href="/login">login</a>
@@ -24,4 +27,15 @@
 		{{ recovery_form.as_p }}
 		<input type="submit" value="Recover" />
 	</form>
+	<h1>Trips Avaiable</h1>
+	{% if error_msg_trips %}
+		<p>{{ error_msg_trips }}
+	{% endif %}
+	<form method="post" action=".">
+		{{ trips_form.as_p }}
+		<input type="submit" value="Check" />
+	</form>
+	{% if trips %}
+	<p>Trips Avaiable:{{trips}}</p>
+	{% endif %}
 {% endblock %}

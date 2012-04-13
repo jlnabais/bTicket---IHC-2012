@@ -44,3 +44,9 @@ PASSWORD: bticketpass
 ----------------------------
 Notas: ver página 52(fim) 53(inicio) para saber como enviar mails
 
+
+
+
+RESET À BASE DE DADOS HEROKU
+
+heroku pg:reset SHARED_DATABASE --confirm bticket

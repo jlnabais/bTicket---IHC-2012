@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm
 from bticket.models import *
 from bticket.utils.widgets import AdminImageWidget
+from django.contrib.auth.forms import PasswordResetForm
 
 
 class OnTheFlyTicketForm(ModelForm):
@@ -68,3 +69,8 @@ class UserProfileManagementForm(ModelForm):
 	first_name = forms.CharField(label = u'First Name', max_length = 30)
 	last_name = forms.CharField(label = u'Last Name', max_length = 30)
 
+class BuyTicketForm(ModelForm):
+	class Meta:
+		model = Ticket
+		exclude = ('user', 'qr_code', 'emission_date')
+	

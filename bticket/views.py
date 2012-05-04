@@ -13,6 +13,10 @@ from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 from settings import *
 from os import remove
+from django.contrib.auth.views import password_reset
+import datetime
+
+
 
 # Create your views here.
 def main_page(request):
@@ -20,6 +24,7 @@ def main_page(request):
 		form = OnTheFlyTicketForm(request.POST)
 		recovery_form = RecoveryOnTheFlyTicketForm(request.POST)
 		trips_form = CheckNuberOfTripsForm(request.POST)
+		ticket_form = BuyTicketForm(request.POST)
 		
 		if form.is_valid():
 			generated_str = g.id_generator(10)
@@ -27,10 +32,10 @@ def main_page(request):
 				generated_str = g.id_generator(10)
 			
 			generated_qrc_str = g.id_generator(8)
-			generated_qrc = hashlib.sha1('bticketcode').hexdigest() + generated_qrc_str
+			generated_qrc = hashlib.sha1('bticketcodeOTFT').hexdigest() + generated_qrc_str
 			while OnTheFlyTicket.objects.filter(qr_code__qr_code = generated_qrc).count():
 				generated_qrc_str = g.id_generator(8)
-				generated_qrc = hashlib.sha1('bticketcode').hexdigest() + generated_qrc_str
+				generated_qrc = hashlib.sha1('bticketcodeOTFT').hexdigest() + generated_qrc_str
 			
 			qrcode_obj = QRCode.objects.create(qr_code = generated_qrc)
 			
@@ -67,6 +72,7 @@ def main_page(request):
 				form = OnTheFlyTicketForm()
 				recovery_form = RecoveryOnTheFlyTicketForm()
 				trips_form = CheckNuberOfTripsForm()
+				ticket_form = BuyTicketForm()
 				error_msg = 'There\'s no ticket associated with that recovery code.'
 				variables = RequestContext(request, {
 					'form' : form,
@@ -96,6 +102,7 @@ def main_page(request):
 				form = OnTheFlyTicketForm()
 				recovery_form = RecoveryOnTheFlyTicketForm()
 				trips_form = CheckNuberOfTripsForm()
+				ticket_form = BuyTicketForm()
 				error_msg_trips = 'There\'s no ticket associated with that recovery code.'
 				variables = RequestContext(request, {
 					'form' : form,
@@ -111,6 +118,7 @@ def main_page(request):
 			form = OnTheFlyTicketForm()
 			recovery_form = RecoveryOnTheFlyTicketForm()
 			trips_form = CheckNuberOfTripsForm()
+			ticket_form = BuyTicketForm()
 			trips = ticket.number_of_trips
 			variables = RequestContext(request, {
 				'ticket' : ticket,
@@ -123,14 +131,59 @@ def main_page(request):
 				'main_page.html',
 				variables
 			)
+			
+		if ticket_form.is_valid():
+			n_trips = ticket_form.cleaned_data['number_of_trips']
+			
+			generated_qrc_str = g.id_generator(8)
+			generated_qrc = hashlib.sha1('bticketcodeTicket').hexdigest() + generated_qrc_str
+			while OnTheFlyTicket.objects.filter(qr_code__qr_code = generated_qrc).count():
+				generated_qrc_str = g.id_generator(8)
+				generated_qrc = hashlib.sha1('bticketcodeTicket').hexdigest() + generated_qrc_str
+			
+			qrcode_obj = QRCode.objects.create(qr_code = generated_qrc)
+			
+			Ticket.objects.create(user = UserProfile.objects.get(user = request.user), qr_code = qrcode_obj, emission_date = datetime.datetime.now(), number_of_trips = n_trips)
+			
+			mail_subject = 'bTicket|OntheFly Purchase'
+			mail_body = 'Ticket information: \n\n \tUser: '+ request.user.username +'\n \tNumber of trips: '+ str(n_trips) +'\n\tQR Code:\n\t'
+			mail_from = DEFAULT_FROM_EMAIL
+			mail_to =  [UserProfile.objects.get(user = request.user).user.email]
+			
+			qrc_image = qrcode.make(generated_qrc)
+			qrc_image.save('site_media/'+ generated_qrc + ".png")
+			msg = EmailMultiAlternatives(mail_subject, mail_body, mail_from, mail_to)
+			msg.attach_file('site_media/'+ generated_qrc + ".png")
+			msg.send()
+			os.remove('site_media/'+ generated_qrc + ".png")
+			
+			msg = "Ticket succefully bought!"
+			form = OnTheFlyTicketForm()
+			recovery_form = RecoveryOnTheFlyTicketForm()
+			trips_form = CheckNuberOfTripsForm()
+			ticket_form = BuyTicketForm()
+			variables = RequestContext(request, {
+				'form' : form,
+				'recovery_form': recovery_form,
+				'trips_form' : trips_form,
+				'ticket_form' : ticket_form,
+				'ticket_purchase_msg' : msg
+			})
+			return render_to_response(
+				'main_page.html',
+				variables
+			)
+			
 	else:
 		form = OnTheFlyTicketForm()
 		recovery_form = RecoveryOnTheFlyTicketForm()
 		trips_form = CheckNuberOfTripsForm()
+		ticket_form = BuyTicketForm()
 		variables = RequestContext(request, {
 			'form' : form,
 			'recovery_form': recovery_form,
-			'trips_form' : trips_form
+			'trips_form' : trips_form,
+			'ticket_form' : ticket_form
 		})
 		return render_to_response(
 			'main_page.html',

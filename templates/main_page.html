@@ -9,7 +9,15 @@
 		Here you can buy your bus tickets!</p>
 		<p>Manage Tickets<a href="/user"> here</a>.</p>
 		<p>Manage Account<a href="/manage"> here</a>.</p>
-		<p>Buy Tickets:</p>
+		<h1>Buy Pass:</h1>
+		{% if pass_msg %}
+			{{ pass_msg }}
+		{% endif %}
+		<form method="post" action=".">
+			{{ pass_form.as_p }}
+			<input type="submit" value="Buy" />
+		</form>
+		<h1>Buy Ticket:</h1>
 		{% if ticket_purchase_msg %}
 			{{ ticket_purchase_msg }}
 		{% endif %}

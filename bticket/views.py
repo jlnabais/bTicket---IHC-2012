@@ -15,6 +15,7 @@ from settings import *
 from os import remove
 from django.contrib.auth.views import password_reset
 import datetime
+from dateutil.relativedelta import relativedelta
 
 
 
@@ -25,6 +26,7 @@ def main_page(request):
 		recovery_form = RecoveryOnTheFlyTicketForm(request.POST)
 		trips_form = CheckNuberOfTripsForm(request.POST)
 		ticket_form = BuyTicketForm(request.POST)
+		pass_form = BuyPassForm(request.POST)
 		
 		if form.is_valid():
 			generated_str = g.id_generator(10)
@@ -73,6 +75,7 @@ def main_page(request):
 				recovery_form = RecoveryOnTheFlyTicketForm()
 				trips_form = CheckNuberOfTripsForm()
 				ticket_form = BuyTicketForm()
+				pass_form = BuyPassForm()
 				error_msg = 'There\'s no ticket associated with that recovery code.'
 				variables = RequestContext(request, {
 					'form' : form,
@@ -103,6 +106,7 @@ def main_page(request):
 				recovery_form = RecoveryOnTheFlyTicketForm()
 				trips_form = CheckNuberOfTripsForm()
 				ticket_form = BuyTicketForm()
+				pass_form = BuyPassForm()
 				error_msg_trips = 'There\'s no ticket associated with that recovery code.'
 				variables = RequestContext(request, {
 					'form' : form,
@@ -119,6 +123,7 @@ def main_page(request):
 			recovery_form = RecoveryOnTheFlyTicketForm()
 			trips_form = CheckNuberOfTripsForm()
 			ticket_form = BuyTicketForm()
+			pass_form = BuyPassForm()
 			trips = ticket.number_of_trips
 			variables = RequestContext(request, {
 				'ticket' : ticket,
@@ -145,7 +150,7 @@ def main_page(request):
 			
 			Ticket.objects.create(user = UserProfile.objects.get(user = request.user), qr_code = qrcode_obj, emission_date = datetime.datetime.now(), number_of_trips = n_trips)
 			
-			mail_subject = 'bTicket|OntheFly Purchase'
+			mail_subject = 'bTicket|Ticket Purchase'
 			mail_body = 'Ticket information: \n\n \tUser: '+ request.user.username +'\n \tNumber of trips: '+ str(n_trips) +'\n\tQR Code:\n\t'
 			mail_from = DEFAULT_FROM_EMAIL
 			mail_to =  [UserProfile.objects.get(user = request.user).user.email]
@@ -162,6 +167,7 @@ def main_page(request):
 			recovery_form = RecoveryOnTheFlyTicketForm()
 			trips_form = CheckNuberOfTripsForm()
 			ticket_form = BuyTicketForm()
+			pass_form = BuyPassForm()
 			variables = RequestContext(request, {
 				'form' : form,
 				'recovery_form': recovery_form,
@@ -174,11 +180,76 @@ def main_page(request):
 				variables
 			)
 			
+		if pass_form.is_valid():
+			avaiable_purchase = False	
+			if( len(UserProfile.objects.get(user = request.user).pass_set.all()) > 0):
+				passes = UserProfile.objects.get(user = request.user).pass_set.all()
+				for passe in passes:
+					if datetime.datetime.now() > passe.expiration_date:
+						avaiable_purchase = True
+					else:
+						avaiable_purchase = False
+						break
+			else:
+				avaiable_purchase = True
+			
+			print avaiable_purchase
+			
+			if avaiable_purchase:
+				Generated_qrc_str = g.id_generator(8)
+				generated_qrc = hashlib.sha1('bticketcodePass').hexdigest() + generated_qrc_str
+
+				while OnTheFlyTicket.objects.filter(qr_code__qr_code = generated_qrc).count():
+					generated_qrc_str = g.id_generator(8)
+					generated_qrc = hashlib.sha1('bticketcodePass').hexdigest() + generated_qrc_str
+
+				qrcode_obj = QRCode.objects.create(qr_code = generated_qrc)
+				now_date = datetime.datetime.now()
+				Pass.objects.create(user = UserProfile.objects.get(user = request.user), qr_code = qrcode_obj, emission_date = now_date, expiration_date = now_date + xrelativedelta(months=+1))
+
+				msg = "Pass succefully bought!"
+				form = OnTheFlyTicketForm()
+				recovery_form = RecoveryOnTheFlyTicketForm()
+				trips_form = CheckNuberOfTripsForm()
+				ticket_form = BuyTicketForm()
+				pass_form = BuyPassForm()
+				variables = RequestContext(request, {
+					'form' : form,
+					'recovery_form': recovery_form,
+					'trips_form' : trips_form,
+					'ticket_form' : ticket_form,
+					'pass_msg' : msg
+				})
+				return render_to_response(
+					'main_page.html',
+					variables
+				)
+			else:
+				msg = "User already has a valid pass."
+				form = OnTheFlyTicketForm()
+				recovery_form = RecoveryOnTheFlyTicketForm()
+				trips_form = CheckNuberOfTripsForm()
+				ticket_form = BuyTicketForm()
+				pass_form = BuyPassForm()
+				variables = RequestContext(request, {
+					'form' : form,
+					'recovery_form': recovery_form,
+					'trips_form' : trips_form,
+					'ticket_form' : ticket_form,
+					'pass_msg' : msg
+				})
+				return render_to_response(
+					'main_page.html',
+					variables
+				)
+		
+			
 	else:
 		form = OnTheFlyTicketForm()
 		recovery_form = RecoveryOnTheFlyTicketForm()
 		trips_form = CheckNuberOfTripsForm()
 		ticket_form = BuyTicketForm()
+		pass_form = BuyPassForm()
 		variables = RequestContext(request, {
 			'form' : form,
 			'recovery_form': recovery_form,

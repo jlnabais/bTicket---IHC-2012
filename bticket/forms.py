@@ -73,4 +73,8 @@ class BuyTicketForm(ModelForm):
 	class Meta:
 		model = Ticket
 		exclude = ('user', 'qr_code', 'emission_date')
-	
+
+class BuyPassForm(ModelForm):
+	class Meta:
+		model = Pass
+		exclude = ('username', 'qr_code', 'emission_date', 'expiration_date')

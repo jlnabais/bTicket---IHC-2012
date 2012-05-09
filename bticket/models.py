@@ -17,7 +17,6 @@ class Ticket(models.Model):
 	number_of_trips = models.DecimalField(max_digits = 2, decimal_places = 0)
 
 class Pass(models.Model):
-	number = models.DecimalField(max_digits = 12, decimal_places = 0)
 	user = models.ForeignKey(UserProfile)
 	qr_code = models.ForeignKey(QRCode)
 	emission_date = models.DateField(default = datetime.datetime.today)

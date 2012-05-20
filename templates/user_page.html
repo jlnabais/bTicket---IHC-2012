@@ -1,28 +1,185 @@
-{% extends "base.html" %}
-{% block title %}{{ username }}{% endblock %}
-{% block head %}Tickets/Passes for {{full_name}}{% endblock %}
-{% block content %}
-	{% if tickets %}
-	<h2>Tickets for {{ full_name }}:</h2>
-		<ul>
-		{% for ticket in tickets %}
-			<li>Id: {{ ticket.id }}</li>
-			<li>Emission Date: {{ ticket.emission_date }}</li>
-			<li>Trips Remaining: {{ ticket.number_of_trips }}</li>
-		{% endfor %}
-		</ul>
-	{% else %}
-		<p>No Tickets Found!</p>
-	{% endif %}
+{% extends "main_page.html" %}
+{% block userpage %}
+<!-- !!!______2- MEUS BILHETES_____!!! -->
+		<div class="accordion-group">
+			
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                    <div class="ticket_icon">
+						<img src="/site_media/Imgs/buyico_color.png" width="62" height="53" alt="buy ico" />
+					</div>
+					<div class="text_gaveta"> <h3> Buy Tickets </h3> </div>
+                </a>
+              </div>
+
+              <div id="collapseOne" class="accordion-body collapse" style="height: 0px; ">
+
+			  	<div class="accordion-inner">
+
+					  <ul id="myTab" class="nav nav-tabs">
+						<li class="active"><a href="#regular_ticket" data-toggle="tab">  <img class ="ico" src="/site_media/Imgs/ico_ticket.png"/>  Buy regular tickets</a></li>
+						<li><a href="#mensal_pass" data-toggle="tab">  <img class ="ico"  src="/site_media/Imgs/ico_pass.png"/>  Buy a mensal pass</a></li>
+					  </ul>
+					  
+					  <div class="pad10">
+					  <div id="myTabContent" class="tab-content">
+					  
+					  
+					  
+						<!-- !!!______1- COMPRAR BILHETES UNICOS_____!!! -->				
+					  
+						<div class="tab-pane fade in active" id="regular_ticket">				
+
+							<p> <span id="step1" data-title="Genre" data-content="Specify how many trips you want.
+							The unit price is variable depending on the number of trips">
+							<strong>1st step: </strong> <small>Ticket genre</small>  </span></p>
+
+								<div class="control-group">
+									<div class="controls">
+										<div class="input-append">
+											<select id="select-box-trips" class="span3">
+												<option value="1">1 Trip &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1.20€ </option>
+												<option value="2">2 Trip's &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2.20€ </option>
+												<option value="3">3 Trip's &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3.20€ </option>
+												<option value="4">4 Trip's &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4.20€ </option>
+												<option value="5">5 Trip's &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5.20€ </option>
+											</select>     
+										</div>      
+									</div>
+								</div>
+											
+
+								<br>
+																
+								<div class="contentor1">
+									<form class="well">
+									  <h4> Resume of purshase</h4>
+									  <br>
+									<p> Client: <span class="label label-warning">{{user.username}}</span>&nbsp;&nbsp;  Aquisition:  <span id="total-trips-span" class="label label-success">1</span> trips &nbsp;&nbsp; Total: <span id="total-price-span" class="label label-info">1.20€</span></p>
+									</form>
+								</div>
+								
+
+								<!-- Ficha de pagamento -->
+								<div id="myModal" class="modal hide fade" style="display: none; ">
+								
+									<div class="modal-header">
+									  <button class="close" data-dismiss="modal">×</button>
+									  <h3>Conclude aquisition</h3>
+									</div>
+									
+									<form class="well">
+									  <h4> Resume of purshase</h4>
+									  <br>
+									  <p> Client: <span class="label label-warning">{{user.username}}</span>&nbsp;&nbsp;  Aquisition:  <span id="total-trips-span2" class="label label-success">1</span> trips &nbsp;&nbsp; Total: <span id="total-price-span2" class="label label-info">1.20€</span></p>
+									</form>
+									
+									<div class="modal-body">
+
+										  <img src="/site_media/Imgs/logo copy.png" width="260" height="57" alt="paypal possibilities" />
+										  
+										  <p>Select your payment type:</p>
+											<div class="controls">
+												<div class="input-append">
+												  <div class="btn-group" data-toggle="buttons-radio">
+														<button class="btn btn-primary">Visa</button>
+														<button class="btn btn-primary">Mastercard</button>
+														<button class="btn btn-primary">MB Net</button>
+														<button class="btn btn-primary active">American Express</button>
+												  </div>
+										  
+												</div>      
+											</div>
+											
+											<br>
+											<label>Insert the card number:</label>
+											<input type="text" class="span3" placeholder="should contain 16-18 digits">
+											<br>
+											<label>Insert the security code (CVC2)</label>
+											<input type="text" class="span3" placeholder="should contain 3 digits">
+											
+
+										<div class="alert fade in">
+											<button class="close" data-dismiss="alert">×</button>
+											<strong>Attention!</strong> Ensure that all data entered is correct, if so, conclude the operation.
+										</div>
+									  
+									</div>
+									
+									<div class="modal-footer">
+										<form method="post" action=".">
+											<input type="hidden" id="buy-input" name="number_of_trips" value="1" style="width:0px"/>	
+											<input class="btn btn-primary"type="submit" value="Buy now!" />
+											<a href="/user/" class="btn btn-warning" data-dismiss="modal">Cancel operation</a>
+										</form>									  
+									    
+									</div>
+								</div> 
+							 
+								<!-- Resumo de compra -->
+
+								<a data-toggle="modal" href="#myModal" class="btn btn-primary btn-large">Complete the purchase</a>
+		
+								<br><br>							
+								
+						</div>
+								
+						<div class="tab-pane fade" id="mensal_pass">
+							<p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.</p>
+						</div>
+
+					  </div>
+					  </div>
+
+
+				</div>
+
+			  
+	          </div>
+            </div>   
+
+
+
+
+	        <div class="accordion-group">
+	        <div class="accordion-heading">
+	        
+	            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+	              	<div class="ticket_icon">	
+						<div class="counter">
+							<span class="badge badge-success">{{tickets|length}}</span>
+					  	</div>
+					</div>
+					{% if tickets %}
+						<div class="text_gaveta"> <h3>See my Ticket's </h3> </div>
+
+						<div id="collapseThree" class="accordion-body collapse">
+	            			{%for ticket in tickets%}
+		            			<div class="accordion-inner">
+					
+									<h3>My Avaiable bTicket <small>This ticket is ready to use, directly through the browser, or download for your device.</small></h3>
+									<!-- !!!____BILHETE VÁLIDO___!!! --> 				
+									<a href="#" class="thumbnail">
+									 
+									 	<div class="valid_ticket">
+											<div class="valid_QRC">
+												<img src="/site_media/Imgs/QR-Code.jpg" alt="B-Ticket">
+											</div>
+											<div class="ticket_content"></div>
+										</div>
+									</a>
+									
+						            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+		           				 </div>
+		           			{%endfor%}
+	        			</div>
+					{%else%}
+						<div class="text_gaveta"> <h3>There is no Ticket's available </h3> </div>
+					{%endif%}
+	            </a>
+	        </div>	          
+	        
+        </div>
 	
-	{% if passes %}
-	<h2>Passes for {{ username }}:</h2>
-		<ul>
-		{% for pass in passes %}
-			<li>{{ pass.number }}</li>
-		{% endfor %}
-		</ul>
-	{% else %}
-		<p>No Passes Found!</p>
-	{% endif %}
+
 {% endblock %}

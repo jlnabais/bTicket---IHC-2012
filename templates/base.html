@@ -1,27 +1,108 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xtml1/DTD/xhtml1-transitional.dtd">
-<html>
-	<head>
-		<title>
-			bTicket | {% block title %}{% endblock %}
-		</title>
-		<link rel="stylesheet" href="/site_media/style.css" type="text/css" />
-		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
-	</head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="/site_media/css/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="/site_media/css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
+<link href="/site_media/css/custom.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/site_media/js/jquery.js"></script>
+<script type="text/javascript" src="/site_media/js/bootstrap.js"></script>
+<script type="text/javascript" src="/site_media/js/bootstrap-collapse.js"></script>
+<script type="text/javascript" src="/site_media/js/bootstrap-tooltip.js"></script>
+<script type="text/javascript" src="/site_media/js/bootstrap-popover.js"></script>
+
+<title>b-ticket</title>
+</head>
 	<body>
-		<div id="nav">
-			<a href="/">home</a> |
-			<a href="http://www.smtuc.pt/geral/index_horarios.php">schedule</a> |
-			<a href="http://www.smtuc.pt/geral/index_itinerarios.php">itinerary</a> |
-			{% if user.is_authenticated %}
-				welcome {{ user.username }}
-				(<a href="/logout">logout</a>)
-			{% else %}
-				<a href="/login/">login</a> |
-				<a href="/register/">register</a>
-			{% endif %}
+
+		<div class="container">
+			<div class="navbar">
+				 <div class="navbar-inner">
+					<div class="container">
+						{%if user.userprofile%}
+					 		<a href="/user"><div class="logo"><img src="/site_media/Imgs/pixel.gif" /></div></a>
+					 	{%else%}
+					 		<a href="/"><div class="logo"><img src="/site_media/Imgs/pixel.gif" /></div></a>
+					 	{%endif%}
+						  
+					  	<div class="nav-persistent">
+							<ul class="nav pull-right">
+								<li class="divider-vertical"></li>
+							   
+							   <!-- Quando o utilizador está ligado, substituir o nome por &nbsp; e deixar o <br />, para forçar uma quebra de linha no início do menu -->
+							   <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% if user.userprofile %}<img src="/site_media/{{user.userprofile.avatar}}" class="avatar" weight="34" width="34"/>{{user.username}}{%endif%}<br /> Account <b class="caret"></b></a>
+							   		{%if user.userprofile %}
+							   		 <ul class="dropdown-menu">
+										<li><a href="/manage"><i class="icon-cog"></i>  Manage Account</a></li>
+										<li><a href="/logout"><i class="icon-off"></i>    Logout</a></li>
+								    </ul>								    
+								    {%else%}
+									   <ul class="dropdown-menu">
+											<a> <a href="/login"><i class="icon-user"></i>  Login</a>									
+											<form class="well form-inline" method="post" action="/login/">
+											 	<p><input  type="text" name="username" class="input-small" placeholder="Username" /></p>
+											  	<p><input  type="password" name="password" class="input-small" placeholder="Password"/></p>
+											  	<label class="checkbox">
+													<input type="checkbox"> Remember me
+											  	</label>
+											 	<input type="submit" value="Login" class="btn btn-primary btn-medium" />								
+												<input type="hidden" name="next" value="/user" />
+											</form>
+										    <li><a href="/register/"><i class="icon-plus-sign"></i>    Create Account</a></li>
+									    </ul>
+								    {%endif%}
+							   	</li>
+						 	</ul>
+					  	</div>
+						  
+						<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
+						  
+						<div class="nav-collapse">
+							<ul class="nav pull-right">
+						   
+								<!-- O &nbsp;<br /> é uma batota, para forçar uma quebra de linha, no início de cada menu -->
+							   
+							   	<li class="active"><a href="/help">&nbsp;<br /> Help</a></li>
+							   	<li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">&nbsp;<br />Services <b class="caret"></b></a>
+							    	<ul class="dropdown-menu">
+								       <li><a href="http://www.smtuc.pt/geral/index_horarios.php" target="_blank"> <i class="icon-time"></i> Bus Info</a></li>
+								       <li><a href="http://www.smtuc.pt/index.php" target="_blank"> <i class="icon-info-sign"></i> SMTUC Info</a></li>
+								       <li><a href="http://www.cm-coimbra.pt/index.php?option=com_frontpage&Itemid=60" target="_blank"> <i class="icon-bookmark"></i> CMC</a></li>
+								       
+								       <li class="divider"></li>
+								       <li class="nav-header">Project About</li>
+								       
+								       <li><a href="http://www.uc.pt/" target="_blank"> University of Coimbra</a></li>
+								       <li><a href="#">Project Document</a></li>
+							     	</ul>
+							   	</li>
+							</ul>
+						</div>
+						<!-- /.nav-collapse -->
+				 	</div>
+			    
+			    <!-- /navbar-inner --> 
+			    </div>
+
+			</div>
+			
+
+			{% block content %}{% endblock %}
+
+			<footer class="footer">
+		        <h6>The ©bTicket service was developed in an academic context and serves as a evaluation purpose at the <a href="http://www.uc.pt/" target="_blank">University of Coimbra</a></h6>
+		        <h6>Code licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>. Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</h6>
+    		</footer>
+
 		</div>
-		<h1>{% block head %}{% endblock %}</h1>
-		{% block content %}{% endblock %}
+
 	</body>
+
+	<script type="text/javascript">
+		$('#teste').popover({ //não posso passar isto em a, só em div's
+			placement: 'bottom'
+			//,animation: false
+			});
+	</script>
 </html>

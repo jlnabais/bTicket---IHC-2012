@@ -1,0 +1,89 @@
+<div class="box menu">
+					<h2>
+						<a href="#" id="toggle-section-menu" style="cursor: pointer; " class="visible">Section Menu</a>
+					</h2>
+					<div style="margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; position: static; overflow-x: hidden; overflow-y: hidden; height: 226px; "><div class="block" id="section-menu" style="margin-right: 0px; margin-bottom: 0px; margin-left: 0px; margin-top: 0px; ">
+						<ul class="section menu">
+							<li>
+								<a class="menuitem current">Menu 1</a>
+								<ul class="submenu current" style="padding-top: 0px; border-top-style: none; border-top-width: initial; border-top-color: initial; padding-bottom: 0px; border-bottom-style: none; border-bottom-width: initial; border-bottom-color: initial; overflow-x: hidden; overflow-y: hidden; height: 125px; ">
+									<li>
+										<a>Submenu 1</a>
+									</li>
+									<li>
+										<a>Submenu 2</a>
+									</li>
+									<li>
+										<a class="active">Submenu 3</a>
+									</li>
+									<li>
+										<a>Submenu 4</a>
+									</li>
+									<li>
+										<a>Submenu 5</a>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<a class="menuitem ">Menu 2</a>
+								<ul class="submenu " style="padding-top: 0px; border-top-style: none; border-top-width: initial; border-top-color: initial; padding-bottom: 0px; border-bottom-style: none; border-bottom-width: initial; border-bottom-color: initial; overflow-x: hidden; overflow-y: hidden; height: 0px; ">
+									<li>
+										<a>Submenu 1</a>
+									</li>
+									<li>
+										<a>Submenu 2</a>
+									</li>
+									<li>
+										<a>Submenu 3</a>
+									</li>
+									<li>
+										<a>Submenu 4</a>
+									</li>
+									<li>
+										<a>Submenu 5</a>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<a class="menuitem ">Menu 3</a>
+								<ul class="submenu " style="padding-top: 0px; border-top-style: none; border-top-width: initial; border-top-color: initial; padding-bottom: 0px; border-bottom-style: none; border-bottom-width: initial; border-bottom-color: initial; overflow-x: hidden; overflow-y: hidden; height: 0px; ">
+									<li>
+										<a>Submenu 1</a>
+									</li>
+									<li>
+										<a>Submenu 2</a>
+									</li>
+									<li>
+										<a>Submenu 3</a>
+									</li>
+									<li>
+										<a>Submenu 4</a>
+									</li>
+									<li>
+										<a>Submenu 5</a>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<a class="menuitem">Menu 4</a>
+								<ul class="submenu" style="padding-top: 0px; border-top-style: none; border-top-width: initial; border-top-color: initial; padding-bottom: 0px; border-bottom-style: none; border-bottom-width: initial; border-bottom-color: initial; overflow-x: hidden; overflow-y: hidden; height: 0px; ">
+									<li>
+										<a>Submenu 1</a>
+									</li>
+									<li>
+										<a>Submenu 2</a>
+									</li>
+									<li>
+										<a>Submenu 3</a>
+									</li>
+									<li>
+										<a>Submenu 4</a>
+									</li>
+									<li>
+										<a>Submenu 5</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div></div>
+				</div>

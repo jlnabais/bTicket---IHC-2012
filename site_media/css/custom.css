@@ -1,0 +1,181 @@
+@charset "utf-8";
+/* CSS Document */
+
+.container{
+	max-width:800px;
+}
+.seablue {
+color:#003366;
+}
+
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+  color: #333333;
+  background-color:#DDE5E7;
+}
+
+.logo {
+	float:left;
+	margin:10px 10px 10px 0;
+	width:	127px;
+	height: 34px;
+	background:url(../Imgs/logoWhite.png);
+}
+
+.logo:hover{
+	float:left;
+	margin:10px 10px 10px 0;
+	width:	127px;
+	height: 34px;
+	background:url(../Imgs/logo_copy2.png);
+}
+
+.accordion-group {
+  margin-bottom: 4px;
+  border: 1px solid #e5e5e5;
+    -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+}
+
+.accordion-heading {
+	background:#F2F2F2;
+	-webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+	}
+	
+.accordion-inner {
+	background:#FFFFFF;
+	}
+	
+	.brand{
+	color: #FFF;	
+	}
+	.brand:hover{color:#F00}
+	
+.whitebox{
+	padding:18px;
+	background:#FFF;
+	-webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px 2px 0 0;	
+}
+	
+.banner{
+	height:160px;
+}
+
+.contentor0{
+	float:left;
+}
+
+.contentor1{
+	margin-top: 10px;
+}
+
+
+
+.avatar{
+	float: right;
+	}
+.name_account{
+	float:left;
+	margin-top: 8px;
+}
+	
+.user_area{
+	margin: 10px 0 0 10px;
+	width: 130px;
+	height: 46px;
+	float: right;
+}
+	
+.ticket_icon{
+	float:left;
+	margin-right:15px;
+}
+
+.text_gaveta{
+	padding:22px 0 0 0;
+}
+
+.counter{
+	width: 62px;
+	height: 53px;
+	background-image:url(../Imgs/pass.png);
+	padding-top: 7px;
+}
+
+.ico{
+margin-top: -6px;
+}
+
+.ticket_content{
+
+}
+
+.valid_QRC{
+
+}
+
+
+
+/*  Para ajustar o menu, de forma a bater certo com o
+	logo, aumentar ou diminuir a margin-top aqui...    */
+.nav li {
+	margin-top: 0;
+}
+  
+.avatar {
+	margin: 0 0 0 10px;
+	float: right;
+}
+
+
+
+
+.alert-info-ticket {
+  padding: 4px 15px 4px 4px;
+  height: 15px;
+  margin-bottom: 2px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  border: 1px solid #fbeed5;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+  
+}
+
+.ticket{
+  color: #000000;
+  background-color: #B5D2CE;
+  border-color: #B5D2CE;		
+}
+
+.old-ticket{
+  color: #000000;
+  background-color: #DCDCDC;
+  border-color: #DCDCDC;
+	
+}
+
+
+.legenda{
+  color: #00000;
+  background-color: #ffffff;
+  border-color: #ffffff;
+	
+}
+
+.info{
+	text-align: left;
+	font-size: 13px;	
+}
+
+.pad10{
+margin:0 15px 0 15px;
+}

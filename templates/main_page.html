@@ -1,57 +1,225 @@
 {% extends "base.html" %}
-{% block title %}Welcome to bTicket{% endblock %}
-{% block head %}Welcome to bTicket{% endblock %}
 {% block content %}
-	{% if user.userprofile %}
-		<p>{{ user.get_full_name }}</p>
-		<img src='site_media/{{user.userprofile.avatar}}' height="80" width="80">
-		<p>Wellcome {{ user.username }}!
-		Here you can buy your bus tickets!</p>
-		<p>Manage Tickets<a href="/user"> here</a>.</p>
-		<p>Manage Account<a href="/manage"> here</a>.</p>
-		<h1>Buy Pass:</h1>
-		{% if pass_msg %}
-			{{ pass_msg }}
-		{% endif %}
-		<form method="post" action=".">
-			{{ pass_form.as_p }}
-			<input type="submit" value="Buy" />
-		</form>
-		<h1>Buy Ticket:</h1>
-		{% if ticket_purchase_msg %}
-			{{ ticket_purchase_msg }}
-		{% endif %}
-		<form method="post" action=".">
-			{{ ticket_form.as_p }}
-			<input type="submit" value="Buy" />
-		</form>
-	{% else %}
-		<p>Welcome anonymous user!
-		You need to <a href="/login">login</a>
-		before you can buy your bus tickets.</p>
-	{% endif %}
-	<h1>On The Fly Ticket</h1>
-	<form method="post" action=".">
-		{{ form.as_p }}
-		<input type="submit" value="Buy" />
-	</form>
-	<h1>Recover On The Fly Ticket</h1>
-	{% if error_msg %}
-		<p>{{ error_msg }}
-	{% endif %}
-	<form method="post" action=".">
-		{{ recovery_form.as_p }}
-		<input type="submit" value="Recover" />
-	</form>
-	<h1>Trips Avaiable</h1>
-	{% if error_msg_trips %}
-		<p>{{ error_msg_trips }}
-	{% endif %}
-	<form method="post" action=".">
-		{{ trips_form.as_p }}
-		<input type="submit" value="Check" />
-	</form>
-	{% if trips %}
-	<p>Trips Avaiable:{{trips}}</p>
-	{% endif %}
+
+	<div id="myCarousel" class="carousel slide">
+	   	<div class="carousel-inner">
+		    <div class="item active left">
+		       	<img src="/site_media/Imgs/ban0.jpg" alt="You have this problem?">
+		       	<div class="carousel-caption">
+		        	<p>You have some of these problems when using public transport? bTicket is your solution.</p>
+		       	</div>
+		    </div>
+		    <div class="item next left">
+		       	<img src="/site_media/Imgs/ban2.jpg" alt="For all Users">
+		       	<div class="carousel-caption">
+		         	<p>bTicket is for you, for your mother and your grandfather. Is a simple and intuitive platform for all users.</p>
+		       	</div>
+		    </div>
+		    <div class="item">
+		       	<img src="/site_media/Imgs/ban3.jpg" alt="Using B-Ticket">
+		       	<div class="carousel-caption">
+		         	<p>The b-ticket is where you are: in your home, on your phone or tablet.</p>
+		       	</div>
+		    </div>
+		</div>
+		<a class="left carousel-control" href="#myCarousel" data-slide="prev"></a>
+		<a class="right carousel-control" href="#myCarousel" data-slide="next"></a>
+	</div>
+	{% if ticket_purchase_msg %}
+		<!-- Mensagem de sucesso -->
+		{%if user.userprofile%}
+		<div class="alert alert-success">
+		  <button class="close" data-dismiss="alert">×</button>
+		  <strong>Well done {{user.username}}!</strong> You successfully buy the  SMTUC ticket. You can check you Ticket in <strong>'Check Tickets'</strong> menu or consult it in your <strong>e-mail</strong>. 
+		</div>
+		{%else%}
+		<div class="alert alert-success">
+		  <button class="close" data-dismiss="alert">×</button>
+		  <strong>Well done!</strong> You successfully buy the  SMTUC ticket. Check your <strong>e-mail</strong> for details and utilization. 
+		</div>
+		{%endif%}
+		
+	{%endif%}
+	<!-- !!!!!!______________GAVETAS_____________!!!!!! --> 
+	<div class="accordion" id="accordion2">
+		
+		<!-- !!!!!!______________GAVETAS_____________!!!!!! --> 
+		<div class="accordion" id="accordion2">
+			<!-- !!!______1- COMPRAR BILHETE_____!!! -->
+			{%if user.userprofile%}
+				{%block userpage%}{%endblock%}
+			{%else%}
+            <div class="accordion-group">
+			
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                    <div class="ticket_icon">
+						<img src="/site_media/Imgs/buyico_color.png" width="62" height="53" alt="buy ico" />
+					</div>
+					<div class="text_gaveta"> <h3> Buy Tickets </h3> </div>
+                </a>
+              </div>
+              <div id="collapseOne" class="accordion-body collapse" style="height: 0px; ">
+
+			  	<div class="accordion-inner">
+
+					  <ul id="myTab" class="nav nav-tabs">
+						<li class="active"><a href="#regular_ticket" data-toggle="tab">  <img class ="ico" src="/site_media/Imgs/ico_ticket.png"/>  Buy regular tickets</a></li>
+					  </ul>
+					  
+					  <div class="pad10">
+					  <div id="myTabContent" class="tab-content">				  
+					  
+					  
+						<!-- !!!______1- COMPRAR BILHETES UNICOS_____!!! -->						
+						
+					  
+						<div class="tab-pane fade in active" id="regular_ticket">
+							
+							
+
+							<p> <span id="step1" data-title="Genre" data-content="Specify how many trips you want.
+							The unit price is variable depending on the number of trips">
+							<strong>1st step: </strong> <small>Ticket genre</small>  </span></p>
+
+																	
+
+								<div class="control-group">
+									<div class="controls">
+										<div class="input-append">
+											<select id="select-box-trips" class="span3">
+												<option value="1">1 Trip &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1.20€ </option>
+												<option value="2">2 Trip's &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2.20€ </option>
+												<option value="3">3 Trip's &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3.20€ </option>
+												<option value="4">4 Trip's &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4.20€ </option>
+												<option value="5">5 Trip's &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5.20€ </option>
+											</select>     
+										</div>      
+									</div>
+								</div>
+											
+
+								<br>
+								<p> <span id="step2" data-title="E-mail account" data-content="Specify the email address where you want to receive the ticket.
+								If you create the light of these data remains stored on the service.">
+								<strong>2st step: </strong> <small>E-mail adress</small>  </span></p>
+									
+										
+											<div class="input-prepend">
+											  <span class="add-on"><i class="icon-envelope"></i></span><input class="span3" id="inputEmail" type="text">
+											</div>
+										
+
+								
+								<div class="contentor1">
+									<form class="well">
+									  <h4> Resume of purshase</h4>
+									  <br>
+									<p> Client: <span class="label label-warning">Not registed</span>&nbsp;&nbsp;  Aquisition:  <span id="total-trips-span" class="label label-success">1</span> trips &nbsp;&nbsp; Total: <span id="total-price-span" class="label label-info">1.20€</span></p>
+									</form>
+								</div>
+								
+
+								<!-- Ficha de pagamento -->
+								<div id="myModal" class="modal hide fade" style="display: none; ">
+								
+									<div class="modal-header">
+									  <button class="close" data-dismiss="modal">×</button>
+									  <h3>Conclude aquisition</h3>
+									</div>
+									
+									<form class="well">
+									  <h4> Resume of purshase</h4>
+									  <br>
+									  <p> Client: <span class="label label-warning">Not registed</span>&nbsp;&nbsp;  Aquisition:  <span id="total-trips-span2" class="label label-success">1</span> trips &nbsp;&nbsp; Total: <span id="total-price-span2" class="label label-info">1.20€</span></p>
+									</form>
+									
+									<div class="modal-body">
+
+										  <img src="/site_media/Imgs/logo copy.png" width="260" height="57" alt="paypal possibilities" />
+										  
+										  <p>Select your payment type:</p>
+											<div class="controls">
+												<div class="input-append">
+												  <div class="btn-group" data-toggle="buttons-radio">
+														<button class="btn btn-primary">Visa</button>
+														<button class="btn btn-primary">Mastercard</button>
+														<button class="btn btn-primary">MB Net</button>
+														<button class="btn btn-primary active">American Express</button>
+												  </div>
+										  
+												</div>      
+											</div>
+											
+											<br>
+											<label>Insert the card number:</label>
+											<input type="text" id="cardNumber" class="span3" placeholder="should contain 16-18 digits">
+											<br>
+											<label>Insert the security code (CVC2)</label>
+											<input type="text" class="span3" placeholder="should contain 3 digits">
+											
+
+										<div class="alert fade in">
+											<button class="close" data-dismiss="alert">×</button>
+											<strong>Attention!</strong> Ensure that all data entered is correct, if so, conclude the operation.
+										</div>
+									  
+									</div>
+									
+										<div class="modal-footer">
+											<form method="post" action="/onTheFly">
+												<input type="hidden" id="buy-input" name="number_of_trips" value="1"/>
+												<input type="hidden" id="email-input" name="Email" value=""/>
+												<input type="hidden" id="cardNumber-input" name="card_number" value="1234567890123456"/>
+												<input class="btn btn-primary"type="submit" value="Buy now!"/>		
+												<a href="/" class="btn btn-warning" data-dismiss="modal">Cancel operation</a> 												
+											</form>			
+									   
+									</div>
+								</div> 
+							 
+								<!-- Resumo de compra -->
+
+
+
+								<a data-toggle="modal" href="#myModal" class="btn btn-primary btn-large">Complete the purchase</a>
+		
+								<br><br>
+				
+								
+								
+						</div>
+								
+						</div>
+					  </div>
+
+
+				</div>
+
+			  
+	          </div>
+            </div>
+
+            
+			{%endif%}
+		
+		
+        
+    </div>
+
+    <script>
+    	$("#select-box-trips").change(function(){
+			$("#total-trips-span").html($("#select-box-trips").val());
+			$("#total-price-span").html($("#select-box-trips").val()+".20€");
+			$("#total-trips-span2").html($("#select-box-trips").val());
+			$("#total-price-span2").html($("#select-box-trips").val()+".20€");
+			$("#buy-input").val($("#select-box-trips").val());
+		});
+		$("#inputEmail").change(function(){
+			$("#email-input").val($("#inputEmail").val());
+		});
+		$("#cardNumber").change(function(){
+			$("#cardNumber-input").val($("#cardNumber").val());
+		});
+    </script>
 {% endblock %}

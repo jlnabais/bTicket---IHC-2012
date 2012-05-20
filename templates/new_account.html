@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/custom.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/bootstrap-collapse.js"></script>
+<script type="text/javascript" src="js/bootstrap-tooltip.js"></script>
+<script type="text/javascript" src="js/bootstrap-popover.js"></script>
+
+<title>b-ticket</title>
+</head>
+
+<body>
+
+
+<div class="container">
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+      
+    	<a href="index.html"><div class="logo"><img src="Imgs/pixel.gif" /></div></a>
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
+        <div class="nav-collapse">
+          <ul class="nav">
+            <li><a href="help.html">Help</a></li>
+            <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Services <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://www.smtuc.pt/geral/index_horarios.php">Bus Info</a></li>
+                <li><a href="http://www.smtuc.pt/index.php">SMTUC Info</a></li>
+                <li><a href="http://www.cm-coimbra.pt/index.php?option=com_frontpage&Itemid=60">CMC</a></li>
+                <li class="divider"></li>
+                <li class="nav-header">Project About</li>
+                <li><a href="#">University of Coimbra</a></li>
+                <li><a href="#">Project Document</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav pull-right">
+            <li><a href="#">Help</a></li>
+            <li class="divider-vertical"></li>
+            <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Account <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Login</a></li>
+                <li><a href="#">Create Account</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Get help</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        
+        <!-- /.nav-collapse --> 
+        
+      </div>
+    </div>
+    
+    <!-- /navbar-inner --> 
+    
+  </div>
+
+
+
+
+<div class="container">
+  <div class="accordion" id="accordion2">
+      <div class="accordion-group">
+        <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo"> <i class="icon-qrcode"></i> New Account </a> </div>
+        <div id="collapseTwo" class="accordion-body in collapse" style="height: auto; ">
+          <div class="accordion-inner"> 
+	
+			<label class="control-label" for="inputIcon">Name</label>
+	          <div class="controls">
+	            <div class="input-prepend">
+	              <input class="name" id="inputName" type="text">
+	            </div>
+	          </div>
+
+	
+		  	<label class="control-label" for="inputIcon">Email address</label>
+	          <div class="controls">
+	            <div class="input-prepend">
+	              <span class="add-on"><i class="icon-envelope"></i></span>
+				  <input class="span2" id="inputIcon" type="text">
+	            </div>
+	          </div>
+	
+	
+			<label class="control-label" for="inputIcon">Username</label>
+	          <div class="controls">
+	            <div class="input-prepend">
+	              <input class="username" id="inputName" type="text">
+	            </div>
+	          </div>
+	
+			<label class="control-label" for="inputIcon">Password</label>
+	          <div class="controls">
+	            <div class="input-prepend">
+	              <input class="username" id="pass1" type="password">
+	            </div>
+	          </div>
+	
+			<label class="control-label" for="inputIcon">Confirm password</label>
+	          <div class="controls">
+	            <div class="input-prepend">
+	              <input class="username" id="pass2" type="password">
+	            </div>
+	          </div>
+	
+	
+			<label class="control-label" for="inputIcon">Upload image</label>
+	          <div class="controls">
+	            <div class="input-prepend">
+					<input type="file" name="datafile" size="40"></input>
+	            </div>
+				<p></p>
+	          </div>
+
+	
+			<a data-toggle="modal" href="#" class="btn btn-primary btn-medium">Create Account</a> 
+			 <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+	
+	
+			</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -16,18 +16,71 @@ from os import remove
 from django.contrib.auth.views import password_reset
 import datetime
 from dateutil.relativedelta import relativedelta
+from django.contrib.auth import authenticate, login
 
 
+def index(request):
+	return render_to_response('index.html')
+
+def ontheflyTicket(request):
+	if request.method == 'POST':
+
+		data= {'email': request.POST['Email'],
+			   'number_of_trips':request.POST['number_of_trips'],
+			   'card_number':request.POST['card_number']}
+		form = OnTheFlyTicketForm(data)
+		
+		if form.is_valid():
+			
+			generated_str = g.id_generator(10)
+			while OnTheFlyTicket.objects.filter(recovery_code = generated_str).count():
+				generated_str = g.id_generator(10)
+			
+			generated_qrc_str = g.id_generator(8)
+			generated_qrc = hashlib.sha1('bticketcodeOTFT').hexdigest() + generated_qrc_str
+			while OnTheFlyTicket.objects.filter(qr_code__qr_code = generated_qrc).count():
+				generated_qrc_str = g.id_generator(8)
+				generated_qrc = hashlib.sha1('bticketcodeOTFT').hexdigest() + generated_qrc_str
+			
+			qrcode_obj = QRCode.objects.create(qr_code = generated_qrc)
+			
+			ticket = form.save(commit = False)
+			ticket.recovery_code = generated_str
+			ticket.qr_code =  qrcode_obj
+			ticket.save()
+			
+			mail_subject = 'bTicket|OntheFly Purchase'
+			mail_body = 'Ticket information: \n\n \tRecovery Code:\n\t' +  ticket.recovery_code + "\n \tQR Code:\n\t"
+			mail_from = DEFAULT_FROM_EMAIL
+			mail_to =  [form.cleaned_data['email']]
+			
+			qrc_image = qrcode.make(generated_qrc)
+			qrc_image.save('site_media/'+ generated_qrc + ".png")
+			msg = EmailMultiAlternatives(mail_subject, mail_body, mail_from, mail_to)
+			msg.attach_file('site_media/'+ generated_qrc + ".png")
+			msg.send()
+			os.remove('site_media/'+ ticket.qr_code.qr_code + ".png")
+			
+			successmsg="SUCCESS!"
+			variables = RequestContext(request, {
+				'ticket' : ticket,
+				'ticket_purchase_msg':successmsg
+			})
+			return render_to_response(
+				'main_page.html',
+				variables
+			)
 
 # Create your views here.
 def main_page(request):
 	if request.method == 'POST':
+		
 		form = OnTheFlyTicketForm(request.POST)
 		recovery_form = RecoveryOnTheFlyTicketForm(request.POST)
 		trips_form = CheckNuberOfTripsForm(request.POST)
 		ticket_form = BuyTicketForm(request.POST)
 		pass_form = BuyPassForm(request.POST)
-		
+
 		if form.is_valid():
 			generated_str = g.id_generator(10)
 			while OnTheFlyTicket.objects.filter(recovery_code = generated_str).count():
@@ -241,9 +294,7 @@ def main_page(request):
 				return render_to_response(
 					'main_page.html',
 					variables
-				)
-		
-			
+				)			
 	else:
 		form = OnTheFlyTicketForm()
 		recovery_form = RecoveryOnTheFlyTicketForm()
@@ -268,24 +319,89 @@ def logout_page(request):
 
 @login_required
 def user_page(request):
-	userp = UserProfile.objects.get(user = request.user)
 	
-	tickets = userp.ticket_set.all()
-	passes = userp.pass_set.all()
-	image = userp.avatar
 	#template = get_template('user_page.html')
-	
-	variables = RequestContext(request, {
-		'username' : userp.user.username,
-		'tickets' : tickets,
-		'passes' : passes,
-		'image' : image,
-		'full_name' : userp.user.get_full_name()
-	})
-	return render_to_response('user_page.html', variables)
+	if request.method == 'POST':
+		ticket_form = BuyTicketForm(request.POST)
+		if ticket_form.is_valid():
+				n_trips = ticket_form.cleaned_data['number_of_trips']
+				
+				generated_qrc_str = g.id_generator(8)
+				generated_qrc = hashlib.sha1('bticketcodeTicket').hexdigest() + generated_qrc_str
+				while OnTheFlyTicket.objects.filter(qr_code__qr_code = generated_qrc).count():
+					generated_qrc_str = g.id_generator(8)
+					generated_qrc = hashlib.sha1('bticketcodeTicket').hexdigest() + generated_qrc_str
+				
+				qrcode_obj = QRCode.objects.create(qr_code = generated_qrc)
+				
+				Ticket.objects.create(user = UserProfile.objects.get(user = request.user), qr_code = qrcode_obj, emission_date = datetime.datetime.now(), number_of_trips = n_trips)
+				
+				mail_subject = 'bTicket|Ticket Purchase'
+				mail_body = 'Ticket information: \n\n \tUser: '+ request.user.username +'\n \tNumber of trips: '+ str(n_trips) +'\n\tQR Code:\n\t'
+				mail_from = DEFAULT_FROM_EMAIL
+				mail_to =  [UserProfile.objects.get(user = request.user).user.email]
+				
+				qrc_image = qrcode.make(generated_qrc)
+				qrc_image.save('site_media/'+ generated_qrc + ".png")
+				msg = EmailMultiAlternatives(mail_subject, mail_body, mail_from, mail_to)
+				msg.attach_file('site_media/'+ generated_qrc + ".png")
+				msg.send()
+				os.remove('site_media/'+ generated_qrc + ".png")
+
+				userp = UserProfile.objects.get(user = request.user)
+				msg = "Ticket succefully bought!"
+
+				recovery_form = RecoveryOnTheFlyTicketForm()
+				
+				userp = UserProfile.objects.get(user = request.user)
+				ticket_form = BuyTicketForm()
+				tickets = userp.ticket_set.all()
+				passes = userp.pass_set.all()
+				image = userp.avatar
+				pass_form = BuyPassForm()
+				trips_form = CheckNuberOfTripsForm()
+				variables = RequestContext(request, {
+					'username' : userp.user.username,
+					'tickets' : tickets,
+					'passes' : passes,
+					'image' : image,
+					'full_name' : userp.user.get_full_name(),
+					'ticket_form' : ticket_form,
+					'recovery_form': recovery_form,
+					'trips_form' : trips_form,
+					'pass_form' : pass_form,
+					'ticket_purchase_msg' : msg
+				})
+				return render_to_response(
+					'user_page.html',
+					variables
+				)
+	else:
+		userp = UserProfile.objects.get(user = request.user)
+		recovery_form = RecoveryOnTheFlyTicketForm()
+		ticket_form = BuyTicketForm()
+		tickets = userp.ticket_set.all()
+		passes = userp.pass_set.all()
+		pass_form = BuyPassForm()
+		trips_form = CheckNuberOfTripsForm()
+		image = userp.avatar
+		variables = RequestContext(request, {
+			'username' : userp.user.username,
+			'tickets' : tickets,
+			'passes' : passes,
+			'image' : image,
+			'full_name' : userp.user.get_full_name(),
+			'ticket_form' : ticket_form,
+			'recovery_form': recovery_form,
+			'trips_form' : trips_form,
+			'pass_form' : pass_form,
+
+		})
+		return render_to_response('user_page.html', variables)
 
 @login_required
 def manage_page(request):
+	
 	if request.method == 'POST':
 		userp = UserProfile.objects.get(user = request.user)
 		form = UserProfileManagementForm(request.POST, request.FILES, instance = request.user.userprofile)
@@ -313,8 +429,10 @@ def manage_page(request):
 		form = UserProfileManagementForm(
 			initial = { 'email': request.user.email, 'first_name': request.user.first_name, 'last_name': request.user.last_name, },
 			instance = request.user.userprofile)
+		user = request.user
 		variables = RequestContext(request, {
-			'form' : form
+			'form' : form,
+			'user' : user 
 		})
 		return render_to_response(
 			'manage/manage.html',
@@ -385,4 +503,8 @@ def send_email_from_recovery(request, rcode):
 			'recovery/onthefly_recovery_success.html',
 			variables
 		)
-	
+
+def help(request):
+	user = request.user
+	variables =  RequestContext(request, {'user' : user})
+	return render_to_response('Help.html',variables)

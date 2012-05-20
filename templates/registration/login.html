@@ -1,18 +1,27 @@
 {% extends "base.html" %}
-{% block title %}User Login{% endblock %}
-{% block head %}User Login{% endblock %}
 {% block content %}
-	{% if form.errors %}
-		<p>Your username and password didn't match.
-			Please try again.</p>
-	{% endif %}
-	
-	<form method="post" action=".">
-		<p><label for="id_username">Username:</label>
-			{{form.username}}</p>
-		<p><label for="id_password">Password:</label>
-			{{form.password}}</p>
-		<input type="submit" value="login" />
-		<input type="hidden" name="next" value="/" />
-	</form>
+
+  <div class="whitebox">       
+	<h2>Login</h2>
+          <div class="accordion-inner"> 
+			{% if form.errors %}
+				<div class="alert alert-error">
+					  	Your <strong>username</strong> or <strong>password</strong> are incorrect! Please try again.
+				</div>
+				
+			{% endif %}
+			
+			<form method="post" action=".">
+				<p><label for="id_username">Username:</label>
+					{{form.username}}</p>
+				<p><label for="id_password">Password:</label>
+					{{form.password}}</p>
+				<input type="submit" value="Login" class="btn btn-primary btn-medium"/>
+				<a href="/" class="btn" data-dismiss="modal">Cancel</a>
+				<input type="hidden" name="next" value="/user" />
+			</form>
+			</div>
+			<a href="/register" class="accordion-toggle" ><i class="icon-plus-sign"></i> Don't have an account? Click here to create now! </a>
+    </div>    
+
 {% endblock %}

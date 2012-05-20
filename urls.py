@@ -18,9 +18,12 @@ urlpatterns = patterns('',
 	(r'^manage/$', manage_page),
 	(r'^register/success/$', direct_to_template, {'template': 'registration/register_success.html'}),
 	(r'^ontheflyticket/success/$', direct_to_template, {'template': 'purchase/onthefly_success.html'}),
+	(r'^onTheFly',ontheflyTicket),
 	(r'^qrcode/(\w+)/$', generate_qrcode),
 	(r'^recovery/(\w+)/$', send_email_from_recovery),
 	(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/site_media/favicon.ico'}),
+	(r'^help/$',help),
+	
 )
 
 

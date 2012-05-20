@@ -1,12 +1,22 @@
 {% extends "base.html" %}
-{% block title %}User Management{% endblock %}
-{% block head %}User Management{% endblock %}
 {% block content %}
-	<form enctype="multipart/form-data" method="post" action=".">
-		{{ form.as_p }}
-		<input type="submit" value="change" />
-	</form>
-	{% if msg %}
-		<p>{{msg}}</p>
-	{% endif %}
+<div class="whitebox">       
+	<h2>Manage Account</h2>
+    
+      <div class="accordion-inner">    
+		<form enctype="multipart/form-data" method="post" action=".">
+			{{ form.as_p }}
+			<input type="submit" value="Change" class="btn btn-primary btn-medium"/>
+			<a href="/manage/" class="btn" data-dismiss="modal">Cancel</a>
+			<input type="hidden" name="next" value="/manage/" />
+		</form>
+		{% if msg %}
+		<div class="alert alert-success">
+		  <button class="close" data-dismiss="alert">×</button>
+			{{msg}}
+		</div>
+		{% endif %}		
+		</div>   
+  </div>
+
 {% endblock %}

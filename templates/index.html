@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/custom.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/bootstrap-collapse.js"></script>
+<script type="text/javascript" src="js/bootstrap-tooltip.js"></script>
+<script type="text/javascript" src="js/bootstrap-popover.js"></script>
+
+<title>b-ticket</title>
+</head>
+
+<body>
+
+
+<div class="container">
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+      
+    	<a href="index.html"><div class="logo"><img src="Imgs/pixel.gif" /></div></a>
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
+        <div class="nav-collapse">
+          <ul class="nav">
+            <li><a href="help.html">Help</a></li>
+            <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Services <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://www.smtuc.pt/geral/index_horarios.php">Bus Info</a></li>
+                <li><a href="http://www.smtuc.pt/index.php">SMTUC Info</a></li>
+                <li><a href="http://www.cm-coimbra.pt/index.php?option=com_frontpage&Itemid=60">CMC</a></li>
+                <li class="divider"></li>
+                <li class="nav-header">Project About</li>
+                <li><a href="#">University of Coimbra</a></li>
+                <li><a href="#">Project Document</a></li>
+              </ul>
+            </li>
+          </ul>	
+          <ul class="nav pull-right">
+            <li><a href="#">Help</a></li>	
+            <li class="divider-vertical"></li>
+            <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Account <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+				<li>
+					<div class= "login">
+						Login	
+						<input class="span2" id="username" type="text" value= "username">
+						<input  class= "span2" id="pass1" type="password" value= "password">
+					</div>
+					
+					</li>
+                <li><a href="new_account.html">Create Account</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Get help</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        
+        <!-- /.nav-collapse --> 
+        
+      </div>
+    </div>
+    
+    <!-- /navbar-inner --> 
+    
+  </div>
+
+
+<div class="container">
+  <div class="accordion" id="accordion2">
+    <div class="accordion-group">
+      <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne"> <i class="icon-align-justify"></i> Buy Ticket </a> </div>
+      <div id="collapseOne" class="accordion-body collapse" style="height: 0px; ">
+        <div class="accordion-inner">
+        
+        <div class="control-group">
+            <label class="control-label" for="appendedInputButton"> Ticket genre:</label>
+            <div class="controls">
+              <div class="input-append">
+            <select class="span2">
+                <option>1 Trip &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1.20€ </option>
+                <option>2 Trip's &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2.20€ </option>
+                <option>3 Trip's &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3.20€ </option>
+                <option>4 Trip's &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4.20€ </option>
+                <option>5 Trip's &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5.20€ </option>
+              </select>     
+              </div>      
+            </div>
+          </div>
+          
+          <p>Anim pariatur cliche reprehenderit, enim eiusmod high life <span id="teste" data-title="comprar" data-content="para adquirir bilhete"> accusamus</span> terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.</p>
+          
+         <div class="control-group">
+          <label class="control-label" for="inputIcon">Email address</label>
+          <div class="controls">
+            <div class="input-prepend">
+              <span class="add-on"><i class="icon-envelope"></i></span><input class="span2" id="inputIcon" type="text">
+            </div>
+          </div>
+        </div>
+        
+      <!-- Ficha de pagamento -->
+
+          <h3> Complete the purchase </h3>
+
+          <div id="myModal" class="modal hide fade" style="display: none; ">
+            <div class="modal-header">
+              <button class="close" data-dismiss="modal">×</button>
+              <h3>Comclude aquisition</h3>
+            </div>
+            <div class="modal-body">
+              <h4>Text in a modal</h4>
+              <p>The service allows the following forms of payment:</p>
+              <img src="Imgs/logo copy.png" width="260" height="57" alt="paypal possibilities" />
+              <hr>
+              <h4>Payment type:</h4>
+              
+               <div class="control-group">
+            <label class="control-label" for="appendedInputButton">Card type:</label>
+            <div class="controls">
+              <div class="input-append">
+            <select class="span2">
+                <option>Visa </option>
+                <option>Mastercard </option>
+                <option>Net Multibanco </option>
+                <option>American Express</option>
+              </select>     
+              </div>      
+            </div>
+          </div>
+
+              <hr>
+            <div class="alert fade in">
+            <button class="close" data-dismiss="alert">×</button>
+            <strong>Attention!</strong> Ensure that all data entered is correct, if so, conclude the operation.
+          </div>
+              
+             <!-- barra de loading -->
+            <div class="progress progress-striped active">
+              <div class="bar"
+             style="width: 40%;"></div>
+            </div>
+            </div>
+            <div class="modal-footer">
+              <a href="#" onclick="buyTicket()" class="btn btn-primary">Buy it now</a>
+              <a href="#" class="btn" data-dismiss="modal">Cancel operation</a>
+            </div>
+          </div> 
+          <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-large">Make Payment</a>
+
+          <hr>
+        
+        <!-- Mensagem de sucesso -->
+        
+            <div class="alert alert-success">
+              <button class="close" data-dismiss="alert">×</button>
+              <strong>Well done!</strong> You successfully buy the  SMTUC ticket. Check your e-mail to use it. </div>
+            </div>
+        </div>
+        
+      <div class="accordion-group">
+        <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo"> <i class="icon-qrcode"></i> Consult my Ticket's </a> </div>
+        <div id="collapseTwo" class="accordion-body in collapse" style="height: auto; ">
+          <div class="accordion-inner"> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS. </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script type="text/javascript">
+ function buyTicket(){
+    $.ajax({
+      type:"POST",
+      url: "/teste/",
+      data: "Aqui vou eu",
+      dataType: "Text",      
+    });
+  }
+</script>
+<script type="text/javascript">
+	$('#teste').popover({ //não posso passar isto em a, só em div's
+		placement: 'bottom'
+		//,animation: false
+		})</script>
+</html>

@@ -441,7 +441,7 @@ def manage_page(request):
 
 def register_page(request):
 	if request.method == 'POST':
-		form = UserProfileRegistrationForm(request.POST, request.FILES)
+		form = UserProfileRegistrationForm(request.POST, request.FILES)		
 		if form.is_valid():
 			user = User.objects.create_user(
 				username = form.cleaned_data['username'],

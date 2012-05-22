@@ -28,6 +28,7 @@ class UserProfileRegistrationForm(ModelForm):
 	first_name_error = {
 		'required': mark_safe('<p style="color: red;">This field is required.</p>')
 	}
+
 	first_name = forms.CharField(label = u'First Name', max_length = 30, error_messages = first_name_error)
 	
 	last_name_error = {
@@ -98,13 +99,21 @@ class UserProfileRegistrationForm(ModelForm):
 		if not re.search(r'(?iL)^[\s\*\?a-z]*$', first_name):
 			raise forms.ValidationError(mark_safe('<p style="color: red;">First name can only contain '
 				'a-z letters and whitespaces.</p>'))
+		try:
+			User.objects.get(first_name = first_name)
+		except:
+			return first_name
 
 	def clean_last_name(self):
 		last_name = self.cleaned_data['last_name']
 		if not re.search(r'(?iL)^[\s\*\?a-z]*$', last_name):
 			raise forms.ValidationError(mark_safe('<p style="color: red;">Last name can only contain '
 				'a-z letters and whitespaces.</p>'))
-
+		try:
+			User.objects.get(last_name = last_name)
+		except:
+			return last_name
+			
 class UserProfileManagementForm(ModelForm):
 	class Meta:
 		model = UserProfile

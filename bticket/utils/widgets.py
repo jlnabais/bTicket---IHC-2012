@@ -8,7 +8,7 @@ import os
 try:
 	from sorl.thumbnail import get_thumbnail
 	def thumbnail(image_path):
-		t = get_thumbnail(image_path, "80x80", crop="center", quality=99, format='PNG')
+		t = get_thumbnail(image_path, "34x34", crop="center", quality=99, format='PNG')
 		return u'<img src="%s" alt="%s" />' % (t.url, image_path)
 except ImportError:
 	def thumbnail(image_path):

@@ -6,3 +6,4 @@ PIL
 sorl-thumbnail
 psycopg2==2.4.2
 datetime
+python-dateutil

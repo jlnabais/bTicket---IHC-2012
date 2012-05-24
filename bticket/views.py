@@ -258,9 +258,8 @@ def main_page(request):
 
 				qrcode_obj = QRCode.objects.create(qr_code = generated_qrc)
 				now_date = datetime.datetime.now()
-				expire_date = now_date + datetime.timedelta(365/12))
+				expire_date = now_date + datetime.timedelta(365/12)
 				Pass.objects.create(user = UserProfile.objects.get(user = request.user), qr_code = qrcode_obj, emission_date = now_date.date(), expiration_date = expire_date.date())
-
 				msg = "Pass succefully bought!"
 				form = OnTheFlyTicketForm()
 				recovery_form = RecoveryOnTheFlyTicketForm()

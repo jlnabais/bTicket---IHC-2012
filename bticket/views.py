@@ -382,7 +382,7 @@ def user_page(request):
 				return render_to_response(
 					'user_page.html',
 					variables
-				)
+				) 
 	else:
 		userp = UserProfile.objects.get(user = request.user)
 		recovery_form = RecoveryOnTheFlyTicketForm()

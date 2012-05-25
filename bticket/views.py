@@ -356,6 +356,12 @@ def user_page(request):
 				userp = UserProfile.objects.get(user = request.user)
 				ticket_form = BuyTicketForm()
 				tickets = userp.ticket_set.all()
+				
+				number_of_trips = 0
+				for ticket in tickets:
+					if ticket.number_of_trips > 0:
+						 number_of_trips += ticket.number_of_trips
+				
 				passes = userp.pass_set.all()
 				image = userp.avatar
 				pass_form = BuyPassForm()
@@ -370,7 +376,8 @@ def user_page(request):
 					'recovery_form': recovery_form,
 					'trips_form' : trips_form,
 					'pass_form' : pass_form,
-					'ticket_purchase_msg' : msg
+					'ticket_purchase_msg' : msg,
+					'number_of_trips' : number_of_trips
 				})
 				return render_to_response(
 					'user_page.html',
@@ -381,6 +388,12 @@ def user_page(request):
 		recovery_form = RecoveryOnTheFlyTicketForm()
 		ticket_form = BuyTicketForm()
 		tickets = userp.ticket_set.all()
+		
+		number_of_trips = 0
+		for ticket in tickets:
+			if ticket.number_of_trips > 0:
+				 number_of_trips += ticket.number_of_trips
+		
 		passes = userp.pass_set.all()
 		pass_form = BuyPassForm()
 		trips_form = CheckNuberOfTripsForm()
@@ -395,7 +408,7 @@ def user_page(request):
 			'recovery_form': recovery_form,
 			'trips_form' : trips_form,
 			'pass_form' : pass_form,
-
+			'number_of_trips' : number_of_trips
 		})
 		return render_to_response('user_page.html', variables)
 

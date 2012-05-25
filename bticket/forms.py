@@ -70,7 +70,7 @@ class UserProfileRegistrationForm(ModelForm):
 		field_args = {
 			"avatar" : {
 				"error_messages" : {
-					'required': mark_safe('<div class="alert alert-error" style="max-width:145px">Avataard is required.</div>')
+					'required': mark_safe('<div class="alert alert-error" style="max-width:145px">Avatard is required.</div>')
 				}
 			}
 		}
@@ -94,25 +94,6 @@ class UserProfileRegistrationForm(ModelForm):
 			return username
 		raise forms.ValidationError(mark_safe('<div class="alert alert-error" style="max-width:145px">Username is already taken.</div>'))
 
-	def clean_first_name(self):
-		first_name = self.cleaned_data['first_name']
-		if not re.search(r'(?iL)^[\s\*\?a-z]*$', first_name):
-			raise forms.ValidationError(mark_safe('<div class="alert alert-error" style="max-width:145px">First name can only contain '
-				'a-z letters and whitespaces.</div>'))
-		try:
-			User.objects.get(first_name = first_name)
-		except:
-			return first_name
-
-	def clean_last_name(self):
-		last_name = self.cleaned_data['last_name']
-		if not re.search(r'(?iL)^[\s\*\?a-z]*$', last_name):
-			raise forms.ValidationError(mark_safe('<div class="alert alert-error" style="max-width:145px">Last name can only contain '
-				'a-z letters and whitespaces.</div>'))
-		try:
-			User.objects.get(last_name = last_name)
-		except:
-			return last_name
 
 class UserProfileManagementForm(ModelForm):
 	class Meta:
@@ -123,9 +104,6 @@ class UserProfileManagementForm(ModelForm):
 	last_name = forms.CharField(label = u'Last Name', max_length = 30)	
 	email = forms.EmailField(label = u'Email')
 	avatar = forms.FileField(widget = AdminImageWidget, required = False)
-	
-	
-	
 
 class BuyTicketForm(ModelForm):
 	class Meta:

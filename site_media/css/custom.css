@@ -183,9 +183,5 @@ margin:0 15px 0 15px;
 .errorlist li
 {
 	display: inline;
-	float: right;
 }
-.accordion-inner input
-{
-	float:left;
-}
+

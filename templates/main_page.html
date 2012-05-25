@@ -75,8 +75,6 @@
 						
 					  
 						<div class="tab-pane fade in active" id="regular_ticket">
-							
-							
 
 							<p> <span id="step1" data-title="Genre" data-content="Specify how many trips you want.
 							The unit price is variable depending on the number of trips">
@@ -241,5 +239,15 @@
 		$("#cardNumber").change(function(){
 			$("#cardNumber-input").val($("#cardNumber").val());
 		});
-    </script>
+
+		$('#step1').popover({ //não posso passar isto em a, só em div's
+			placement: 'bottom'
+			//,animation: false
+			})
+			
+		$('#step2').popover({ //não posso passar isto em a, só em div's
+			placement: 'bottom'
+			//,animation: false
+			})
+	</script>
 {% endblock %}

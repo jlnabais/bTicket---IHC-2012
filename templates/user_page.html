@@ -28,7 +28,7 @@
 					  
 						<!-- !!!______1- COMPRAR BILHETES UNICOS_____!!! -->				
 					  
-						<div class="tab-pane fade in active" id="regular_ticket">				
+						<div class="tab-pane fade in active" id="regular_ticket">			
 
 							<p> <span id="step1" data-title="Genre" data-content="Specify how many trips you want.
 							The unit price is variable depending on the number of trips">
@@ -147,7 +147,7 @@
 	            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
 	              	<div class="ticket_icon">	
 						<div class="counter">
-							<span class="badge badge-success">{{tickets|length}}</span>
+							<span class="badge badge-success">{{number_of_trips}}</span>
 					  	</div>
 					</div>
 					{% if tickets %}

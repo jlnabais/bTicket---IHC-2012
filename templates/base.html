@@ -31,7 +31,7 @@
 								<li class="divider-vertical"></li>
 							   
 							   <!-- Quando o utilizador está ligado, substituir o nome por &nbsp; e deixar o <br />, para forçar uma quebra de linha no início do menu -->
-							   <li class="dropdown"> <a href="#" style ="min-width:115px" class="dropdown-toggle" data-toggle="dropdown">{% if user.userprofile %}<img src="/site_media/{{user.userprofile.avatar}}" class="avatar" weight="34" width="34"/>{{user.username}}{%endif%}<br /> Account <b class="caret"></b></a>
+							   <li class="dropdown"> <a href="#" style ="min-width:115px" class="dropdown-toggle" data-toggle="dropdown">{% if user.userprofile %}<img src="/site_media/{{user.userprofile.avatar}}" class="avatar" weight="34d" width="34"/>{{user.username}}{%endif%}<br /> Account <b class="caret"></b></a>
 							   		{%if user.userprofile %}
 							   		 <ul class="dropdown-menu">
 										<li><a href="/manage"><i class="icon-cog"></i>  Manage Account</a></li>

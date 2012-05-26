@@ -62,9 +62,11 @@ def ontheflyTicket(request):
 			os.remove('site_media/'+ ticket.qr_code.qr_code + ".png")
 			
 			successmsg="SUCCESS!"
+			sendemail_Form = SentEmailFromRecoveryForm()
 			variables = RequestContext(request, {
-				'ticket' : ticket,
-				'ticket_purchase_msg':successmsg
+				'ontheflyticket' : ticket,
+				'ticket_purchase_msg':successmsg,
+				'sendEmailForm' : sendemail_Form
 			})
 			return render_to_response(
 				'main_page.html',
@@ -143,11 +145,11 @@ def main_page(request):
 				
 			form = SentEmailFromRecoveryForm()
 			variables = RequestContext(request, {
-				'ticket' : ticket,
+				'ontheflyticket' : ticket,
 				'form' : form
 			})
 			return render_to_response(
-				'recovery/onthefly_recovery_success.html',
+				'main_page.html',
 				variables
 			)
 			
@@ -486,12 +488,15 @@ def generate_qrcode(request, qr_code):
 def send_email_from_recovery(request, rcode):
 	if request.method == 'POST':
 		form = SentEmailFromRecoveryForm(request.POST)
+		print "1"
+
 		ticket = OnTheFlyTicket.objects.get(recovery_code = rcode)
 		if form.is_valid():
+			print "2"
 			mail_subject = 'bTicket|OntheFly Recovery'
 			mail_body = 'The following Ticket information was issued from our service to been sent to this e-mail.\n\nTicket information: \n\n \tRecovery Code:\n\t' +  ticket.recovery_code + "\n \tQR Code:\n\t"
 			mail_from = DEFAULT_FROM_EMAIL
-			mail_to =  [form.cleaned_data['email']]
+			mail_to =  request.POST['Email']
 		
 			qrc_image = qrcode.make(ticket.qr_code.qr_code)
 			qrc_image.save('site_media/'+ ticket.qr_code.qr_code + ".png")
@@ -499,12 +504,15 @@ def send_email_from_recovery(request, rcode):
 			msg.attach_file('site_media/'+ ticket.qr_code.qr_code + ".png")
 			msg.send()
 			os.remove('site_media/'+ ticket.qr_code.qr_code + ".png")
-		
+			print "3"
 			variables = RequestContext(request, {
-				'email' : form.cleaned_data['email']
+				'email' : request.POST['Email'],
+				'ontheflyticket': ticket,
+				'recovery_msg': 'true',
 			})
+			print "4"
 			return render_to_response(
-				'recovery/onthefly_recovery_success.html',
+				'main_page.html',
 				variables
 			)
 	else:

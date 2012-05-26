@@ -138,9 +138,6 @@
 	          </div>
             </div>   
 
-
-
-
 	        <div class="accordion-group">
 	        <div class="accordion-heading">
 	        
@@ -150,33 +147,276 @@
 							<span class="badge badge-success">{{number_of_trips}}</span>
 					  	</div>
 					</div>
-					{% if tickets %}
-						<div class="text_gaveta"> <h3>Check my Tickets </h3> </div>
-
-						<div id="collapseThree" class="accordion-body collapse">
-	            			{%for ticket in tickets%}
-		            			<div class="accordion-inner">
-					
-									<h3>My Avaiable bTicket <small>This ticket is ready to use, directly through the browser, or download for your device.</small></h3>
-									<!-- !!!____BILHETE VÁLIDO___!!! --> 				
-									<a href="#" class="thumbnail">
-									 
-									 	<div class="valid_ticket">
-											<div class="valid_QRC">
-												<img src="/site_media/Imgs/QR-Code.jpg" alt="B-Ticket">
-											</div>
-											<div class="ticket_content"></div>
+				
+				{% if tickets %}
+					<div class="text_gaveta"> <h3>Check my Tickets </h3> </div>
+					</a>
+					<div id="collapseThree" class="accordion-body collapse">
+            			
+	            			<div class="accordion-inner">
+								<div class="tabbable"> <!-- Only required for left/right tabs -->
+								  <ul class="nav nav-tabs">
+								    <li class="active"><a href="#tab1" data-toggle="tab"> <i class="icon-qrcode"> </i> &nbsp; Available Tickets</a></li>
+								    <li><a href="#tab2" data-toggle="tab"> <i class="icon-time"> </i> &nbsp;History</a></li>							
+								  </ul>
+								 </div>
+								 <div class="tab-content">
+								 <div class="tab-pane active" id="tab1">
+								{%for ticket in tickets%}		
+								    
+									<a href="#" class= "thumbnail">
+									<div class= "row show-grid">
+										<div class="span2"> 
+											<img src="/qrcode/{{ticket.qr_code.qr_code}}/" height= "150px"/> 
 										</div>
+										<div class="span4"> 
+											<br>
+											<p><span class="label label-success">&nbsp;{{ticket.number_of_trips}} </span> <strong>&nbsp;&nbsp;Available Trips </strong></p>
+											<h6> Bougth at {{ticket.emission_date}}</h6>
+											<p></p>
+											<button class="btn btn-small btn-default"> <i class="icon-download-alt"></i> Download 	</button>
+										</div>
+					            	</div>
 									</a>
-									
-						            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-		           				 </div>
-		           			{%endfor%}
-	        			</div>
-					{%else%}
-						<div class="text_gaveta"> <h3>There is no Ticket's available </h3> </div>
-					{%endif%}
-	            </a>
+
+								{%endfor%}
+
+							</div>
+					<!-- HISTORY-->
+				
+				    <div class="tab-pane" id="tab2">
+							
+								<div class="accordion" id="accordion4">
+								            <div class="accordion-group">
+											<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#collapseOne4">
+								              		<div class="accordion-heading-tickets info">
+
+														<div class= "span1 pack-tickets"> <i class="icon-qrcode icon-white"></i> &nbsp; 0086 </div>
+														<div class= "span2 pack-tickets"> <strong>2</strong> available trips </div>
+
+								              	  	</div>
+											  </a>
+								              <div id="collapseOne4" class="accordion-body collapse in">
+								                <div class="accordion-inner">
+														
+													      <table class="table table-condensed">
+													        <thead>
+													          <tr>
+													            <th>No.</th>
+													            <th>Type</th>
+													            <th>Purchase Date</th>
+													            <th>Ticket Usage Date </th>
+																<th>Bus </th>
+													          </tr>
+													        </thead>
+													        <tbody>
+													          <tr class= "ticket">
+													            <td>1102</td>
+													            <td>Pack6</td>
+													            <td>12-02-2012 — 15:23 </td>
+													            <td>------------------</td>
+																<td>----</td>
+													          </tr>
+													          <tr class= "ticket">
+													            <td>1102</td>
+													            <td>Pack6</td>
+													            <td>12-02-2012 — 15:23 </td>
+													            <td>------------------</td>
+																<td>----</td>
+													          </tr>
+													          <tr class= "old-ticket">
+													            <td>1102</td>
+													            <td>Pack6</td>
+													            <td>12-02-2012 — 15:23 </td>
+													            <td>------------------</td>
+																<td>----</td>
+													          </tr>
+													          <tr class= "old-ticket">
+													            <td>1102</td>
+													            <td>Pack6</td>
+													            <td>12-02-2012 — 15:23 </td>
+													            <td>------------------</td>
+																<td>----</td>
+													          </tr>
+															  <tr class= "old-ticket">
+													            <td>1102</td>
+													            <td>Pack6</td>
+													            <td>12-02-2012 — 15:23 </td>
+													            <td>24-03-2012 — 20:33 </td>
+																<td>24T</td>
+													          </tr>
+
+													          <tr class= "old-ticket">
+																<td>1102</td>
+													            <td>Pack6</td>
+													            <td>12-02-2012 — 15:23 </td>
+													            <td>27-02-2012 — 09:33 </td>
+																<td>38</td>
+													          </tr>
+
+
+													        </tbody>
+													      </table>
+													    
+								                </div>
+								              </div>
+								            </div>
+								            <div class="accordion-group">
+											  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#collapseTwo4">
+								              	<div class="accordion-heading-tickets">
+													<div class= "span1 pack-tickets"> <i class="icon-qrcode icon-white"></i> &nbsp; 0088 </div>
+													<div class= "span2 pack-tickets"> <strong>4</strong> available trips </div>
+								              	</div>
+											  </a>
+								              <div id="collapseTwo4" class="accordion-body collapse">
+								                <div class="accordion-inner">
+								                		<table class="table table-condensed">
+													        <thead>
+													          <tr>
+													            <th>No.</th>
+													            <th>Type</th>
+													            <th>Purchase Date</th>
+													            <th>Ticket Usage Date </th>
+																<th>Bus </th>
+													          </tr>
+													        </thead>
+													        <tbody>
+													          <tr class= "ticket">
+													            <td>1102</td>
+													            <td>Pack6</td>
+													            <td>12-02-2012 — 15:23 </td>
+													            <td>------------------</td>
+																<td>----</td>
+													          </tr>
+													          <tr class= "ticket">
+													            <td>1102</td>
+													            <td>Pack6</td>
+													            <td>12-02-2012 — 15:23 </td>
+													            <td>------------------</td>
+																<td>----</td>
+													          </tr>
+													          <tr class= "ticket">
+													            <td>1102</td>
+													            <td>Pack6</td>
+													            <td>12-02-2012 — 15:23 </td>
+													            <td>------------------</td>
+																<td>----</td>
+													          </tr>
+													          <tr class= "ticket">
+													            <td>1102</td>
+													            <td>Pack6</td>
+													            <td>12-02-2012 — 15:23 </td>
+													            <td>------------------</td>
+																<td>----</td>
+													          </tr>
+															  <tr class= "old-ticket">
+													            <td>1102</td>
+													            <td>Pack6</td>
+													            <td>12-02-2012 — 15:23 </td>
+													            <td>24-03-2012 — 20:33 </td>
+																<td>24T</td>
+													          </tr>
+
+													          <tr class= "old-ticket">
+																<td>1102</td>
+													            <td>Pack6</td>
+													            <td>12-02-2012 — 15:23 </td>
+													            <td>27-02-2012 — 09:33 </td>
+																<td>38</td>
+													          </tr>
+
+
+													        </tbody>
+													      </table>
+								                </div>
+								              </div>
+								            </div>
+								            <div class="accordion-group">
+								
+								
+											  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#collapseThree4">
+								              	<div class="accordion-heading-tickets-old">
+													<div class= "span1 pack-tickets-old"> <i class="icon-qrcode"></i> &nbsp; 0068 </div>
+													<div class= "span2 pack-tickets-old"> <strong>0</strong> available trips </div>
+								              	</div>
+											  </a>
+								              <div id="collapseThree4" class="accordion-body collapse">
+								                <div class="accordion-inner">
+															<table class="table table-condensed">
+														        <thead>
+														          <tr>
+														            <th>No.</th>
+														            <th>Type</th>
+														            <th>Purchase Date</th>
+														            <th>Ticket Usage Date </th>
+																	<th>Bus </th>
+														          </tr>
+														        </thead>
+														        <tbody>
+														          <tr class= "old-ticket">
+														            <td>1102</td>
+														            <td>Pack6</td>
+														            <td>12-02-2012 — 15:23 </td>
+														            <td>------------------</td>
+																	<td>----</td>
+														          </tr>
+														          <tr class= "old-ticket">
+														            <td>1102</td>
+														            <td>Pack6</td>
+														            <td>12-02-2012 — 15:23 </td>
+														            <td>------------------</td>
+																	<td>----</td>
+														          </tr>
+														          <tr class= "old-ticket">
+														            <td>1102</td>
+														            <td>Pack6</td>
+														            <td>12-02-2012 — 15:23 </td>
+														            <td>------------------</td>
+																	<td>----</td>
+														          </tr>
+														          <tr class= "old-ticket">
+														            <td>1102</td>
+														            <td>Pack6</td>
+														            <td>12-02-2012 — 15:23 </td>
+														            <td>------------------</td>
+																	<td>----</td>
+														          </tr>
+																  <tr class= "old-ticket">
+														            <td>1102</td>
+														            <td>Pack6</td>
+														            <td>12-02-2012 — 15:23 </td>
+														            <td>24-03-2012 — 20:33 </td>
+																	<td>24T</td>
+														          </tr>
+
+														          <tr class= "old-ticket">
+																	<td>1102</td>
+														            <td>Pack6</td>
+														            <td>12-02-2012 — 15:23 </td>
+														            <td>27-02-2012 — 09:33 </td>
+																	<td>38</td>
+														          </tr>
+
+
+														        </tbody>
+														      </table>
+								                </div>
+								              </div>
+								            </div>
+								          </div>
+									</div>
+	           				 	</div>
+	           					
+
+        			</div>
+				{%else%}
+					<div class="text_gaveta"> <h3>There is no Tickets available </h3> </div>
+					</a>
+				{%endif%}
+	            
+
+
+
 	        </div>	          
 	        
         </div>

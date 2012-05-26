@@ -40,6 +40,13 @@
 		{%endif%}
 		
 	{%endif%}
+	{%if recovery_msg %}
+
+		<div class="alert alert-success">
+		  <button class="close" data-dismiss="alert">×</button>
+		  <strong>Recovery successfull!</strong> You successfully recovered your ticket. it was sent to your e-mail (<strong>{{email}}</strong>). 
+		</div>
+	{%endif%}
 	<!-- !!!!!!______________GAVETAS_____________!!!!!! --> 
 	<div class="accordion" id="accordion2">
 		
@@ -208,14 +215,41 @@
 					<div class="text_gaveta"> <h3>Ticket Informations </h3> </div>
                 </a>
               </div>
-              <div id="collapseTwo" class="accordion-body collapse" style="height: 0px; ">
-              	<div class="accordion-inner">
-
-					  <ul id="myTab" class="nav nav-tabs">
-						<li class="active"><a href="#regular_ticket" data-toggle="tab">  <img class ="ico" src="/site_media/Imgs/ico_ticket.png"/>  QRCode Recovery</a></li>
-						<li class="active"><a href="#regular_ticket" data-toggle="tab">  <img class ="ico" src="/site_media/Imgs/ico_ticket.png"/>  See available trips</a></li>
-					  </ul>
+              {% if ontheflyticket %}
+              <div class="accordion-inner">
+              
+              <a href="#" class= "thumbnail">
+						<div class= "row show-grid">
+							<div class="span2"> 
+								<img src="/qrcode/{{ontheflyticket.qr_code.qr_code}}/" height= "150px"/> 
+							</div>
+							<div class="span4"> 
+								<br>
+								<p>
+									<span class="label label-success">
+									&nbsp;{{ontheflyticket.number_of_trips}} </span> <strong>&nbsp;&nbsp;available trips </strong></p>
+								<h6> Bougth at {{ontheflyticket.emission_date}} </h6>
+								<p></p>
+								<form enctype="multipart/form-data" method="post" action="/recovery/{{ontheflyticket.recovery_code}}/">
+									<div class="input-prepend">
+										<span class="add-on"><i class="icon-envelope"></i></span><input class="span3" name="Email" id="Email" type="text">
+									</div>
+									<input type="submit" value="Recover to email" class="btn btn-primary btn-medium"/>
+								</form>
+							</div>
+		            	</div>
+					</a>
 				</div>
+              {%else%}
+              	<div id="collapseTwo" class="accordion-body collapse" style="height: 0px; ">
+    
+              	<div class="accordion-inner">
+              		<form enctype="multipart/form-data" method="post" action=".">
+						{{recovery_form.as_p}}	  
+					<input type="submit" value="Recover" class="btn btn-primary btn-medium"/>
+					  
+				</div>
+				{%endif%}
               </div>
              </div>
             

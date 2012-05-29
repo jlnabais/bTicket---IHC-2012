@@ -305,7 +305,7 @@ def main_page(request):
 		pass_form = BuyPassForm()
 		variables = RequestContext(request, {
 			'form' : form,
-			'recovery_form': recovery_form,
+			'recoveryForm': recovery_form,
 			'trips_form' : trips_form,
 			'ticket_form' : ticket_form
 		})
@@ -360,9 +360,11 @@ def user_page(request):
 				tickets = userp.ticket_set.all()
 				
 				number_of_trips = 0
+				activetickets=0
 				for ticket in tickets:
 					if ticket.number_of_trips > 0:
-						 number_of_trips += ticket.number_of_trips
+						activetickets=activetickets+1
+						number_of_trips += ticket.number_of_trips
 				
 				passes = userp.pass_set.all()
 				image = userp.avatar
@@ -379,7 +381,8 @@ def user_page(request):
 					'trips_form' : trips_form,
 					'pass_form' : pass_form,
 					'ticket_purchase_msg' : msg,
-					'number_of_trips' : number_of_trips
+					'number_of_trips' : number_of_trips,
+					'activetickets' : activetickets
 				})
 				return render_to_response(
 					'user_page.html',
@@ -392,9 +395,11 @@ def user_page(request):
 		tickets = userp.ticket_set.all()
 		
 		number_of_trips = 0
+		activetickets=0
 		for ticket in tickets:
 			if ticket.number_of_trips > 0:
-				 number_of_trips += ticket.number_of_trips
+				activetickets=activetickets+1
+				number_of_trips += ticket.number_of_trips
 		
 		passes = userp.pass_set.all()
 		pass_form = BuyPassForm()
@@ -410,7 +415,8 @@ def user_page(request):
 			'recovery_form': recovery_form,
 			'trips_form' : trips_form,
 			'pass_form' : pass_form,
-			'number_of_trips' : number_of_trips
+			'number_of_trips' : number_of_trips,
+			'activetickets' : activetickets
 		})
 		return render_to_response('user_page.html', variables)
 
@@ -487,41 +493,36 @@ def generate_qrcode(request, qr_code):
 
 def send_email_from_recovery(request, rcode):
 	if request.method == 'POST':
-		form = SentEmailFromRecoveryForm(request.POST)
-		print "1"
-
 		ticket = OnTheFlyTicket.objects.get(recovery_code = rcode)
-		if form.is_valid():
-			print "2"
-			mail_subject = 'bTicket|OntheFly Recovery'
-			mail_body = 'The following Ticket information was issued from our service to been sent to this e-mail.\n\nTicket information: \n\n \tRecovery Code:\n\t' +  ticket.recovery_code + "\n \tQR Code:\n\t"
-			mail_from = DEFAULT_FROM_EMAIL
-			mail_to =  request.POST['Email']
+				
+		mail_subject = 'bTicket|OntheFly Recovery'
+		mail_body = 'The following Ticket information was issued from our service to been sent to this e-mail.\n\nTicket information: \n\n \tRecovery Code:\n\t' +  ticket.recovery_code + "\n \tQR Code:\n\t"
+		mail_from = DEFAULT_FROM_EMAIL
+		mail_to =  [request.POST['Email']]
+	
+		qrc_image = qrcode.make(ticket.qr_code.qr_code)
+		qrc_image.save('site_media/'+ ticket.qr_code.qr_code + ".png")
+		msg = EmailMultiAlternatives(mail_subject, mail_body, mail_from, mail_to)
+		msg.attach_file('site_media/'+ ticket.qr_code.qr_code + ".png")
+		msg.send()
+		os.remove('site_media/'+ ticket.qr_code.qr_code + ".png")
+		variables = RequestContext(request, {
+			'email' : request.POST['Email'],
+			'ontheflyticket': ticket,
+			'recovery_msg': 'true',
+		})
 		
-			qrc_image = qrcode.make(ticket.qr_code.qr_code)
-			qrc_image.save('site_media/'+ ticket.qr_code.qr_code + ".png")
-			msg = EmailMultiAlternatives(mail_subject, mail_body, mail_from, mail_to)
-			msg.attach_file('site_media/'+ ticket.qr_code.qr_code + ".png")
-			msg.send()
-			os.remove('site_media/'+ ticket.qr_code.qr_code + ".png")
-			print "3"
-			variables = RequestContext(request, {
-				'email' : request.POST['Email'],
-				'ontheflyticket': ticket,
-				'recovery_msg': 'true',
-			})
-			print "4"
-			return render_to_response(
-				'main_page.html',
-				variables
-			)
+		return render_to_response(
+			'main_page.html',
+			variables
+		)
 	else:
 		form = SentEmailFromRecoveryForm()
 		variables = RequestContext(request, {
-			'form' : form
+			'recoveryForm' : form
 		})
 		return render_to_response(
-			'recovery/onthefly_recovery_success.html',
+			'main_page.html',
 			variables
 		)
 

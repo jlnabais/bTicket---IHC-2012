@@ -149,7 +149,7 @@
 					</div>
 				
 				{% if tickets %}
-					<div class="text_gaveta"> <h3>Check my Tickets </h3> </div>
+					<div class="text_gaveta"> <h3>{{number_of_trips}} available trips in {{activetickets}}  active tickets. </h3> </div>
 					</a>
 					<div id="collapseThree" class="accordion-body collapse">
             			
@@ -171,10 +171,11 @@
 										</div>
 										<div class="span4"> 
 											<br>
+											<h6><strong>Type</strong>: Regular Ticket </h6><br>
 											<p><span class="label label-success">&nbsp;{{ticket.number_of_trips}} </span> <strong>&nbsp;&nbsp;Available Trips </strong></p>
 											<h6> Bougth at {{ticket.emission_date}}</h6>
 											<p></p>
-											<button class="btn btn-small btn-default"> <i class="icon-download-alt"></i> Download 	</button>
+											<button class="btn btn-primary btn-medium"> <i class="icon-download-alt"></i> Download 	</button>
 										</div>
 					            	</div>
 									</a>

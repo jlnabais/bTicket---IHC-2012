@@ -150,18 +150,6 @@ margin-top: -6px;
   
 }
 
-.ticket{
-  color: #000000;
-  background-color: #B5D2CE;
-  border-color: #B5D2CE;		
-}
-
-.old-ticket{
-  color: #000000;
-  background-color: #DCDCDC;
-  border-color: #DCDCDC;
-	
-}
 
 
 .legenda{
@@ -185,3 +173,58 @@ margin:0 15px 0 15px;
 	display: inline;
 }
 
+
+
+.ticket{
+  font-size: 10px;
+  color: #009245;
+  background-color: #FFFFFF;
+  border-color: #FFFFFF;		
+}
+
+.old-ticket{
+  font-size: 10px;	
+  color: #A5A5A5;
+  background-color: #FFFFFF;
+  border-color: #FFFFFF;
+	
+}
+
+
+.pack-tickets{
+	color: #FFFFFF;
+	font-size: 12px;
+}
+
+.pack-tickets-old{
+	color: #A5A5A5;
+	font-size: 12px;
+}
+
+.accordion-heading-tickets {
+	font-size: 12px;
+	padding-top: 5px;
+	padding-bottom:5px;
+	padding-left:2px;
+	padding-right:2px;
+	
+	height:25px;
+  	background-color: #B3D0CE;
+		-webkit-border-radius: 2px;
+	    -moz-border-radius: 2px;
+	    border-radius: 2px;
+}
+
+.accordion-heading-tickets-old {
+	font-size: 12px;
+	padding-top: 5px;
+	padding-bottom:5px;
+	padding-left:2px;
+	padding-right:2px;
+
+	height:25px;
+	background-color: #FFFFFF;
+			-webkit-border-radius: 2px;
+		    -moz-border-radius: 2px;
+		    border-radius: 2px;
+}

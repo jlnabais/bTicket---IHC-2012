@@ -175,8 +175,20 @@
 											<p><span class="label label-success">&nbsp;{{ticket.number_of_trips}} </span> <strong>&nbsp;&nbsp;Available Trips </strong></p>
 											<h6> Bougth at {{ticket.emission_date}}</h6>
 											<p></p>
-											<button class="btn btn-primary btn-medium"> <i class="icon-download-alt"></i> Download 	</button>
+											<br>
+										<p>Select your recovery method:</p>
+											<div class="controls">
+												<div class="input-append">
+												  <div class="btn-group" data-toggle="buttons-radio" >
+														<button id="recoveryEmail" class="btn btn-primary">Email</button>
+														<button id="recoveryPhone"class="btn btn-primary">Phone</button>
+														<button id="recoveryPrint"class="btn btn-primary">Print</button>
+												  </div>									  
+												</div>      
+											</div>
+											<button id="Recover" class="btn btn-primary btn-medium"> <i class="icon-repeat icon-white"></i> Recovery	</button>
 										</div>
+
 					            	</div>
 									</a>
 

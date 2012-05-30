@@ -392,7 +392,7 @@ def user_page(request):
 		userp = UserProfile.objects.get(user = request.user)
 		recovery_form = RecoveryOnTheFlyTicketForm()
 		ticket_form = BuyTicketForm()
-		tickets = userp.ticket_set.all()
+		tickets = userp.ticket_set.all().order_by('-number_of_trips')
 		
 		number_of_trips = 0
 		activetickets=0

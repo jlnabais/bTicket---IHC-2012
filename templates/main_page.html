@@ -47,8 +47,8 @@
 		  <strong>Recovery successfull!</strong> You successfully recovered your ticket. it was sent to your e-mail (<strong>{{email}}</strong>). 
 		</div>
 	{%endif%}
-	<!-- !!!!!!______________GAVETAS_____________!!!!!! --> 
-	<div class="accordion" id="accordion2">
+	
+	
 		
 		<!-- !!!!!!______________GAVETAS_____________!!!!!! --> 
 		<div class="accordion" id="accordion2">
@@ -216,6 +216,7 @@
                 </a>
               </div>
               {% if ontheflyticket %}
+              
               <div class="accordion-inner">
               
               <a href="#" class= "thumbnail" >
@@ -255,24 +256,27 @@
 		            	</div>
 					</a>
 				</div>
+			
               {%else%}
               	<div id="collapseTwo" class="accordion-body collapse" style="height: 0px; ">
     
               	<div class="accordion-inner">
               		<form enctype="multipart/form-data" method="post" action=".">
 						{{recoveryForm.as_p}}	  
-					<input type="submit" value="Recover" class="btn btn-primary btn-medium"/>
-					  
+						<input type="submit" value="Recover" class="btn btn-primary btn-medium"/>
+					 </form>
 				</div>
+			</div>
 				{%endif%}
-              </div>
-             </div>
+              
+             
             
 			{%endif%}
 		
 		
         
-    </div>
+    	</div>
+
 
     <script>
     	$("#select-box-trips").change(function(){

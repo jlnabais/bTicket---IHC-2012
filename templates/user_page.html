@@ -138,7 +138,7 @@
 	          </div>
             </div>   
 
-	        <div class="accordion-group">
+	<div class="accordion-group">
 	        <div class="accordion-heading">
 	        
 	            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
@@ -147,9 +147,9 @@
 							<span class="badge badge-success">{{number_of_trips}}</span>
 					  	</div>
 					</div>
-				
+			
 				{% if tickets %}
-					<div class="text_gaveta"> <h3>{{number_of_trips}} available trips in {{activetickets}}  active tickets. </h3> </div>
+				<div class="text_gaveta"> <h3>{{number_of_trips}} available trips in {{activetickets}}  active tickets. </h3> </div></div>
 					</a>
 					<div id="collapseThree" class="accordion-body collapse">
             			
@@ -393,6 +393,7 @@
 														          <tr class= "old-ticket">
 														            <td>1102</td>
 														            <td>Pack6</td>
+						
 														            <td>12-02-2012 — 15:23 </td>
 														            <td>------------------</td>
 																	<td>----</td>
@@ -425,17 +426,15 @@
 	           					
 
         			</div>
+        		
 				{%else%}
 					<div class="text_gaveta"> <h3>There is no Tickets available </h3> </div>
 					</a>
 				{%endif%}
-	            
-
-
-
-	        </div>	          
+	           </div>                 
 	        
         </div>
+    
         <script>
 		document.getElementById('urecoveryEmail').onclick = function() {
 		
@@ -451,6 +450,6 @@
 			document.getElementById('uRecover').style.visibility='hidden';		
 		 
 		}
-		
+
 	</script>
 {% endblock %}

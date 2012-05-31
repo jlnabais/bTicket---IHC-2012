@@ -110,7 +110,7 @@
 										<form method="post" action=".">
 											<input type="hidden" id="buy-input" name="number_of_trips" value="1" style="width:0px"/>	
 											<input class="btn btn-primary"type="submit" value="Buy now!" />
-											<a href="/user/" class="btn" data-dismiss="modal">Cancel operation</a>
+											<a href="/user/" class="btn" data-dismiss="modal">Cancel</a>
 										</form>									  
 									    
 									</div>
@@ -127,7 +127,7 @@
 						<div class="tab-pane fade" id="mensal_pass">
 							{%ifequal passes|length 0 %}
 										<form enctype="multipart/form-data" method="post" action="/buypass">
-								<input type="submit" value="buy pass" class="btn btn-primary btn-medium"/>
+								<input type="submit" value="Buy" class="btn btn-primary btn-medium"/>
 							 </form> 
 							 {%else%}
 							 	You allready have a monthly pass active.					
@@ -187,9 +187,9 @@
 											<img src="/qrcode/{{passes.0.qr_code.qr_code}}/" height= "150px"/> 
 										</div> 		
 								    	
-										<div class="span4"> 
+										<div class="span4" > 
 											<br>
-											<h5>Montly pass <strong>active</strong> </h5><br>
+											<h5><span class="label label-success">&nbsp;Montly pass <strong>active</strong> &nbsp;</span></h5><br>
 											<h6> Bougth at {{passes.0.emission_date}}</h6>
 											<h6> Expires at {{passes.0.expiration_date}}</h6>
 											<p></p>
@@ -480,7 +480,7 @@
 				{%endif%}
 	           </div>                 
 	        
-        </div>
+    
     
         <script>
 		

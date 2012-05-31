@@ -45,6 +45,6 @@ PASSWORD: bticketpass
 
 
 
-RESET À BASE DE DADOS HEROKU
+RESET À BASE DE DADOS HEROKU 
 
 heroku pg:reset SHARED_DATABASE --confirm bticket

@@ -367,6 +367,9 @@ def user_page(request):
 						number_of_trips += ticket.number_of_trips
 				
 				passes = userp.pass_set.all()
+				for passe in passes:
+					if passe.expiration_date < datetime.datetime.now().date():
+						passes.remove(passe) 
 				image = userp.avatar
 				pass_form = BuyPassForm()
 				trips_form = CheckNuberOfTripsForm()
@@ -402,6 +405,9 @@ def user_page(request):
 				number_of_trips += ticket.number_of_trips
 		
 		passes = userp.pass_set.all()
+		for passe in passes:
+			if passe.expiration_date < datetime.datetime.now().date():
+				passes.remove(passe)
 		pass_form = BuyPassForm()
 		trips_form = CheckNuberOfTripsForm()
 		image = userp.avatar
@@ -530,3 +536,106 @@ def help(request):
 	user = request.user
 	variables =  RequestContext(request, {'user' : user})
 	return render_to_response('Help.html',variables)
+
+def buy_pass(request):
+	avaiable_purchase = False	
+	if( len(UserProfile.objects.get(user = request.user).pass_set.all()) > 0):
+		passes = UserProfile.objects.get(user = request.user).pass_set.all()
+		for passe in passes:
+			if datetime.datetime.now().date() > passe.expiration_date:
+				avaiable_purchase = True
+			else:
+				avaiable_purchase = False
+				break
+	else:
+		avaiable_purchase = True
+	
+	print avaiable_purchase
+	
+	if avaiable_purchase:
+		generated_qrc_str = g.id_generator(8)
+		generated_qrc = hashlib.sha1('bticketcodePass').hexdigest() + generated_qrc_str
+
+		while OnTheFlyTicket.objects.filter(qr_code__qr_code = generated_qrc).count():
+			generated_qrc_str = g.id_generator(8)
+			generated_qrc = hashlib.sha1('bticketcodePass').hexdigest() + generated_qrc_str
+
+		qrcode_obj = QRCode.objects.create(qr_code = generated_qrc)
+		now_date = datetime.datetime.now()
+		expire_date = now_date + datetime.timedelta(365/12) 
+		Pass.objects.create(user = UserProfile.objects.get(user = request.user), qr_code = qrcode_obj, emission_date = now_date.date(), expiration_date = expire_date.date())
+		userp = UserProfile.objects.get(user = request.user)
+		msg = "Ticket succefully bought!"
+
+		recovery_form = RecoveryOnTheFlyTicketForm()
+		
+		userp = UserProfile.objects.get(user = request.user)
+		ticket_form = BuyTicketForm()
+		tickets = userp.ticket_set.all()
+		
+		number_of_trips = 0
+		activetickets=0
+		for ticket in tickets:
+			if ticket.number_of_trips > 0:
+				activetickets=activetickets+1
+				number_of_trips += ticket.number_of_trips
+		
+		passes = userp.pass_set.all()
+		for passe in passes:
+			if passe.expiration_date < datetime.datetime.now():
+				passes.remove(passe) 
+		image = userp.avatar
+		pass_form = BuyPassForm()
+		trips_form = CheckNuberOfTripsForm()
+		variables = RequestContext(request, {
+			'username' : userp.user.username,
+			'tickets' : tickets,
+			'passes' : passes,
+			'image' : image,
+			'full_name' : userp.user.get_full_name(),
+			'ticket_form' : ticket_form,
+			'recovery_form': recovery_form,
+			'trips_form' : trips_form,
+			'pass_form' : pass_form,
+			'ticket_purchase_msg' : msg,
+			'number_of_trips' : number_of_trips,
+			'activetickets' : activetickets
+		})
+		return render_to_response(
+			'user_page.html',
+			variables
+		) 
+	else:
+		userp = UserProfile.objects.get(user = request.user)
+		recovery_form = RecoveryOnTheFlyTicketForm()
+		ticket_form = BuyTicketForm()
+		tickets = userp.ticket_set.all().order_by('-number_of_trips')
+		
+		number_of_trips = 0
+		activetickets=0
+		for ticket in tickets:
+			if ticket.number_of_trips > 0:
+				activetickets=activetickets+1
+				number_of_trips += ticket.number_of_trips
+		
+		passes = userp.pass_set.all()
+		for passe in passes:
+			if passe.expiration_date < datetime.datetime.now().date():
+				passes.remove(passe)
+		pass_form = BuyPassForm()
+		trips_form = CheckNuberOfTripsForm()
+		image = userp.avatar
+		variables = RequestContext(request, {
+			'username' : userp.user.username,
+			'tickets' : tickets,
+			'passes' : passes,
+			'image' : image,
+			'full_name' : userp.user.get_full_name(),
+			'ticket_form' : ticket_form,
+			'recovery_form': recovery_form,
+			'trips_form' : trips_form,
+			'pass_form' : pass_form,
+			'number_of_trips' : number_of_trips,
+			'activetickets' : activetickets
+		})
+		return render_to_response('user_page.html', variables)

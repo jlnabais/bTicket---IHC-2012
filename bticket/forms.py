@@ -99,10 +99,33 @@ class UserProfileManagementForm(ModelForm):
 	class Meta:
 		model = UserProfile
 		exclude = ('username')
+		field_args = {
+			"avatar" : {
+				"error_messages" : {
+					'required': mark_safe('<div class="alert alert-error" style="max-width:145px">Avatard is required.</div>')
+				}
+			}
+		}
 	
-	first_name = forms.CharField(label = u'First Name', max_length = 30)
-	last_name = forms.CharField(label = u'Last Name', max_length = 30)	
-	email = forms.EmailField(label = u'Email')
+	#first_name = forms.CharField(label = u'First Name', max_length = 30)
+	#last_name = forms.CharField(label = u'Last Name', max_length = 30)	
+	#email = forms.EmailField(label = u'Email')
+	first_name_error = {
+		'required': mark_safe('<div class="alert alert-error" style="max-width:145px">First name is required.</div>')
+	}
+
+	first_name = forms.CharField(label = u'First Name', max_length = 30, error_messages = first_name_error)
+	
+	last_name_error = {
+		'required': mark_safe('<div class="alert alert-error" style="max-width:145px">Last name is required.</div>')
+	}
+	last_name = forms.CharField(label = u'Last Name', max_length = 30, error_messages = last_name_error)
+	
+	email_errors = {
+		'required': mark_safe('<div class="alert alert-error" style="max-width:145px">Email is required.</div>'),
+		'invalid': mark_safe('<div class="alert alert-error" style="max-width:300px">Invalid email.<br>It must follow the pattern: name@domain.com.</div>')
+	}
+	email = forms.EmailField(label = u'Email', error_messages = email_errors)
 	avatar = forms.FileField(widget = AdminImageWidget, required = False)
 
 class BuyTicketForm(ModelForm):

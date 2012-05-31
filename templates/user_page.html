@@ -18,7 +18,7 @@
 
 					  <ul id="myTab" class="nav nav-tabs">
 						<li class="active"><a href="#regular_ticket" data-toggle="tab">  <img class ="ico" src="/site_media/Imgs/ico_ticket.png"/>  Buy regular ticket</a></li>
-						<li><a href="#mensal_pass" data-toggle="tab">  <img class ="ico"  src="/site_media/Imgs/ico_pass.png"/>  Buy a mensal pass</a></li>
+						<li><a href="#mensal_pass" data-toggle="tab">  <img class ="ico"  src="/site_media/Imgs/ico_pass.png"/>  Buy a monthly pass</a></li>
 					  </ul>
 					  
 					  <div class="pad10">
@@ -39,10 +39,10 @@
 										<div class="input-append">
 											<select id="select-box-trips" class="span3">
 												<option value="1">1 Trip &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1.20€ </option>
-												<option value="2">2 Trip's &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2.20€ </option>
-												<option value="3">3 Trip's &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3.20€ </option>
-												<option value="4">4 Trip's &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4.20€ </option>
-												<option value="5">5 Trip's &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5.20€ </option>
+												<option value="2">2 Trips &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2.20€ </option>
+												<option value="3">3 Trips &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3.20€ </option>
+												<option value="4">4 Trips &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4.20€ </option>
+												<option value="5">5 Trips &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5.20€ </option>
 											</select>     
 										</div>      
 									</div>
@@ -110,7 +110,7 @@
 										<form method="post" action=".">
 											<input type="hidden" id="buy-input" name="number_of_trips" value="1" style="width:0px"/>	
 											<input class="btn btn-primary"type="submit" value="Buy now!" />
-											<a href="/user/" class="btn btn-warning" data-dismiss="modal">Cancel operation</a>
+											<a href="/user/" class="btn" data-dismiss="modal">Cancel operation</a>
 										</form>									  
 									    
 									</div>
@@ -125,7 +125,14 @@
 						</div>
 								
 						<div class="tab-pane fade" id="mensal_pass">
-							
+							{%ifequal passes|length 0 %}
+										<form enctype="multipart/form-data" method="post" action="/buypass">
+								<input type="submit" value="buy pass" class="btn btn-primary btn-medium"/>
+							 </form> 
+							 {%else%}
+							 	You allready have a monthly pass active.					
+							 
+							 {%endifequal%}
 						</div>
 
 					  </div>
@@ -148,8 +155,19 @@
 					  	</div>
 					</div>
 			
-				{% if tickets %}
-				<div class="text_gaveta"> <h3>{{number_of_trips}} available trips in {{activetickets}}  active tickets. </h3> </div></div>
+				
+				{% if tickets or passes%}
+					{%ifequal passes|length 1 %}
+						{%if not tickets%}
+							<div class="text_gaveta"> <h3>Monthly pass active.</h3> </div></div>
+						{%else%}
+							<div class="text_gaveta"> <h3>{{number_of_trips}} available trips in {{activetickets}}  active tickets. Monthly pass active. </h3> </div></div>
+						{%endif%}
+					{%endifequal%}	
+					{%ifequal passes|length 0 %}
+						<div class="text_gaveta"> <h3>{{number_of_trips}} available trips in {{activetickets}} active tickets. </h3> </div></div>
+					{%endifequal%}
+
 					</a>
 					<div id="collapseThree" class="accordion-body collapse">
             			
@@ -162,6 +180,37 @@
 								 </div>
 								 <div class="tab-content">
 								 <div class="tab-pane active" id="tab1">
+								{%ifequal passes|length 1 %}
+									<a href="#" class= "thumbnail">
+									<div class= "row show-grid">
+										<div class="span2"> 
+											<img src="/qrcode/{{passes.0.qr_code.qr_code}}/" height= "150px"/> 
+										</div> 		
+								    	
+										<div class="span4"> 
+											<br>
+											<h5>Montly pass <strong>active</strong> </h5><br>
+											<h6> Bougth at {{passes.0.emission_date}}</h6>
+											<h6> Expires at {{passes.0.expiration_date}}</h6>
+											<p></p>
+											<br>
+										<p>Select your recovery method:</p>
+											<div class="controls">
+												<div class="input-append">
+												  <div class="btn-group" data-toggle="buttons-radio" >
+														<button id="urecoveryEmail" class="btn">Email</button>
+														<button id="urecoveryPhone" class="btn">Phone</button>
+														<button id="urecoveryPrint" class="btn">Print</button>
+												  </div>									  
+												</div>      
+											</div>
+											<button id="uRecover" class="btn btn-primary btn-medium"> <i class="icon-repeat icon-white"></i> Recovery	</button>
+										</div>
+
+					            	</div>
+									</a>
+									<br>
+								{%endifequal%}
 								{%for ticket in tickets%}		
 								    
 									<a href="#" class= "thumbnail">
@@ -169,8 +218,6 @@
 										<div class="span2"> 
 											<img src="/qrcode/{{ticket.qr_code.qr_code}}/" height= "150px"/> 
 										</div>
-										
-								    		
 								    	
 										<div class="span4"> 
 											<br>
@@ -183,9 +230,9 @@
 											<div class="controls">
 												<div class="input-append">
 												  <div class="btn-group" data-toggle="buttons-radio" >
-														<button id="urecoveryEmail" class="btn btn-primary">Email</button>
-														<button id="urecoveryPhone" class="btn btn-primary">Phone</button>
-														<button id="urecoveryPrint" class="btn btn-primary">Print</button>
+														<button id="urecoveryEmail" class="btn">Email</button>
+														<button id="urecoveryPhone" class="btn">Phone</button>
+														<button id="urecoveryPrint" class="btn">Print</button>
 												  </div>									  
 												</div>      
 											</div>
@@ -436,20 +483,7 @@
         </div>
     
         <script>
-		document.getElementById('urecoveryEmail').onclick = function() {
 		
-			document.getElementById('uRecover').style.visibility='visible';
-		 
-		}
-		document.getElementById('urecoveryPhone').onclick = function() {
-
-			document.getElementById('uRecover').style.visibility='visible';
-		 
-		}
-		document.getElementById('urecoveryPrint').onclick = function() {
-			document.getElementById('uRecover').style.visibility='hidden';		
-		 
-		}
 
 	</script>
 {% endblock %}

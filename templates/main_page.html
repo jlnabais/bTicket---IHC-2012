@@ -249,8 +249,9 @@
 
 								<form enctype="multipart/form-data" method="post" action="/recovery/{{ontheflyticket.recovery_code}}/">
 									<div id="inputRecovery" class="input-prepend">
-										<span class="add-on"><i id="iconRecovery" class="icon-envelope"></i></span><input class="span3" name="Email" id="Email" type="text">
+										<span class="add-on"><i id="iconRecovery" class="icon-envelope"></i></span><input class="span3" name="Email" id="Email" type="text" value="example@example.com">
 									</div>
+
 									<button id="Recover" class="btn btn-primary btn-medium"> <i class="icon-repeat icon-white"></i> Recovery	</button>
 									
 								</form>
@@ -309,7 +310,6 @@
 		}
 		document.getElementById('recoveryPhone').onclick = function() {
 
-			document.getElementById('iconRecovery').className='icon-camera';
 			document.getElementById('inputRecovery').style.visibility='visible';
 			document.getElementById('Recover').style.visibility='visible';
 		 

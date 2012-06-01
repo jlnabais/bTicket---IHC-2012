@@ -237,6 +237,16 @@ margin:-30px 20px 10px 0;
 	-webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px 2px 0 0;
+	
+	background-repeat:no-repeat;
+	background-position:right top;
+}
+.whiteboxHelp{
+	padding:18px;
+	background-color:#FFF;
+	-webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px 2px 0 0;
 	background-image:url(../Imgs/helpBan.PNG);
 	background-repeat:no-repeat;
 	background-position:right top;

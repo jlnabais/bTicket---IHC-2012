@@ -180,11 +180,13 @@
 								 </div>
 								 <div class="tab-content">
 								 <div class="tab-pane active" id="tab1">
+
 								{%ifequal passes|length 1 %}
 									<a href="#" class= "thumbnail">
 									<div class= "row show-grid">
+										
 										<div class="span2"> 
-											<img src="/qrcode/{{passes.0.qr_code.qr_code}}/" height= "150px"/> 
+											<img class ="fancyzoom" src="/site_media/img/code.jpg" height= "150px"/> 
 										</div> 		
 								    	
 										<div class="span4" > 
@@ -215,6 +217,7 @@
 								    
 									<a href="#" class= "thumbnail">
 									<div class= "row show-grid">
+										
 										<div class="span2"> 
 											<img src="/qrcode/{{ticket.qr_code.qr_code}}/" height= "150px"/> 
 										</div>

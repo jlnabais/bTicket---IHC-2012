@@ -136,8 +136,6 @@ margin-top: -6px;
 }
 
 
-
-
 .alert-info-ticket {
   padding: 4px 15px 4px 4px;
   height: 15px;
@@ -149,7 +147,6 @@ margin-top: -6px;
           border-radius: 4px;
   
 }
-
 
 
 .legenda{
@@ -228,10 +225,12 @@ margin:0 15px 0 15px;
 		    -moz-border-radius: 2px;
 		    border-radius: 2px;
 }
+
 .help_img{
 float:left;
 margin:-30px 20px 10px 0;
 }
+
 .whitebox{
 	padding:18px;
 	background-color:#FFF;

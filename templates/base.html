@@ -11,6 +11,21 @@
 <script type="text/javascript" src="/site_media/js/bootstrap-collapse.js"></script>
 <script type="text/javascript" src="/site_media/js/bootstrap-tooltip.js"></script>
 <script type="text/javascript" src="/site_media/js/bootstrap-popover.js"></script>
+<script type="text/javascript" src="/site_media/js/fancyzoom/jquery.js"></script>
+<!-- optional -->
+<script type="text/javascript" src="/site_media/js/fancyzoom/jquery.shadow.js"></script>
+<script type="text/javascript" src="/site_media/js/fancyzoom/jquery.ifixpng.js"></script>
+
+<script type="text/javascript" src="/site_media/js/fancyzoom/jquery.fancyzoom.min.js"></script>
+
+<script type="text/javascript">
+	$(function(){
+		$('#base > a:first').fancyzoom({Speed:400,showoverlay:false});
+		$('#base > a:last').fancyzoom({Speed:400,showoverlay:false});
+		$('#nooverlay').fancyzoom({Speed:400,showoverlay:false});
+		$('img.fancyzoom').fancyzoom();
+	});
+</script>
 
 <title>b-ticket</title>
 </head>

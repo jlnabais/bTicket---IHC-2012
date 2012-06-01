@@ -107,7 +107,7 @@
 								<br>
 								<p> <span id="step2" data-title="E-mail account" data-content="Specify the email address where you want to receive the ticket.
 								If you create the light of these data remains stored on the service.">
-								<strong>2st step: </strong> <small>E-mail adress</small>  </span></p>
+								<strong>2nd step: </strong> <small>E-mail adress</small>  </span></p>
 									
 										
 											<div class="input-prepend">
@@ -249,9 +249,12 @@
 
 								<form enctype="multipart/form-data" method="post" action="/recovery/{{ontheflyticket.recovery_code}}/">
 									<div id="inputRecovery" class="input-prepend">
-										<span class="add-on"><i id="iconRecovery" class="icon-envelope"></i></span><input class="span3" name="Email" id="Email" type="text" value="example@example.com">
+										<span class="add-on"><i id="iconRecovery" class="icon-envelope"></i></span><input class="span3" name="Email" id="Email" type="text" placeholder="email@domain.com" value="example@example.com">
 									</div>
-
+									
+									<div class="input-prepend" style="display: none" id="inputRecoveryPhone">
+					                  <span class="add-on"><img src="/site_media/Imgs/phone.png"></img></span><input class="span2"  placeholder="Phone number">
+					                </div>
 									<button id="Recover" class="btn btn-primary btn-medium"> <i class="icon-repeat icon-white"></i> Recovery	</button>
 									
 								</form>
@@ -305,18 +308,22 @@
 			
 			document.getElementById('iconRecovery').className='icon-envelope';
 			document.getElementById('inputRecovery').style.visibility='visible';
+			
+			document.getElementById('inputRecoveryPhone').style.visibility='hidden';
 			document.getElementById('Recover').style.visibility='visible';
 		 
 		}
 		document.getElementById('recoveryPhone').onclick = function() {
 
-			document.getElementById('inputRecovery').style.visibility='visible';
+			document.getElementById('inputRecoveryPhone').style.visibility='visible';
+			document.getElementById('inputRecovery').style.visibility='hidden';
 			document.getElementById('Recover').style.visibility='visible';
 		 
 		}
 		document.getElementById('recoveryPrint').onclick = function() {
 						
 			document.getElementById('inputRecovery').style.visibility='hidden';
+			document.getElementById('inputRecoveryPhone').style.visibility='hidden';
 		 
 		}
 

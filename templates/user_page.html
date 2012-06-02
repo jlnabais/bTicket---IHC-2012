@@ -53,9 +53,9 @@
 																
 								<div class="contentor1">
 									<form class="well">
-									  <h4> Resume of purshase</h4>
+									  <h4> Resume of purchase</h4>
 									  <br>
-									<p> Client: <span class="label label-info">{{user.username}}</span>&nbsp;&nbsp;  Aquisition:  <span id="total-trips-span" class="label label-success">1</span> trips &nbsp;&nbsp; Total: <span id="total-price-span" class="label label-info">1.20€</span></p>
+									<p> Client: <span class="label label-info">{{user.username}}</span>&nbsp;&nbsp;  Acquisition:  <span id="total-trips-span" class="label label-success">1</span> trips &nbsp;&nbsp; Total: <span id="total-price-span" class="label label-info">1.20€</span></p>
 									</form>
 								</div>
 								
@@ -65,13 +65,13 @@
 								
 									<div class="modal-header">
 									  <button class="close" data-dismiss="modal">×</button>
-									  <h3>Conclude aquisition</h3>
+									  <h3>Conclude acquisition</h3>
 									</div>
 									
 									<form class="well">
-									  <h4> Resume of purshase</h4>
+									  <h4> Resume of purchase</h4>
 									  <br>
-									  <p> Client: <span class="label label-info">{{user.username}}</span>&nbsp;&nbsp;  Aquisition:  <span id="total-trips-span2" class="label label-success">1</span> trips &nbsp;&nbsp; Total: <span id="total-price-span2" class="label label-info">1.20€</span></p>
+									  <p> Client: <span class="label label-info">{{user.username}}</span>&nbsp;&nbsp;  Acquisition:  <span id="total-trips-span2" class="label label-success">1</span> trips &nbsp;&nbsp; Total: <span id="total-price-span2" class="label label-info">1.20€</span></p>
 									</form>
 									
 									<div class="modal-body">
@@ -101,7 +101,7 @@
 
 										<div class="alert fade in">
 											<button class="close" data-dismiss="alert">×</button>
-											<strong>Attention!</strong> Ensure that all data entered is correct, if so, conclude the operation.
+											<strong>Attention!</strong> Ensure that all data entered is correct. If so, conclude the operation.
 										</div>
 									  
 									</div>
@@ -130,7 +130,7 @@
 								<input type="submit" value="Buy" class="btn btn-primary btn-medium"/>
 							 </form> 
 							 {%else%}
-							 	You allready have a monthly pass active.					
+							 	You already have a monthly pass active.					
 							 
 							 {%endifequal%}
 						</div>
@@ -191,8 +191,8 @@
 								    	
 										<div class="span4" > 
 											<br>
-											<h5><span class="label label-success">&nbsp;Montly pass <strong>active</strong> &nbsp;</span></h5><br>
-											<h6> Bougth at {{passes.0.emission_date}}</h6>
+											<h5><span class="label label-success">&nbsp;Monthly pass <strong>active</strong> &nbsp;</span></h5><br>
+											<h6> Bought at {{passes.0.emission_date}}</h6>
 											<h6> Expires at {{passes.0.expiration_date}}</h6>
 											<p></p>
 											<br>
@@ -226,7 +226,7 @@
 											<br>
 											<h6><strong>Type</strong>: Regular Ticket </h6><br>
 											<p><span class="label label-{% ifequal ticket.number_of_trips 0 %}error{%endifequal%}{%ifequal ticket.number_of_trips 1%}warning{%else%}success{%endifequal%}">&nbsp;{{ticket.number_of_trips}} </span> <strong>&nbsp;&nbsp;Available Trips </strong></p>
-											<h6> Bougth at {{ticket.emission_date}}</h6>
+											<h6> Bought at {{ticket.emission_date}}</h6>
 											<p></p>
 											<br>
 										<p>Select your recovery method:</p>
